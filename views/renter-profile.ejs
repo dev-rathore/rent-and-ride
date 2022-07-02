@@ -1,0 +1,104 @@
+
+  <section id="renter-profile">
+    <div class="d-flex justify-content-center flex-column align-items-center">
+      <h2 class="renter-name">Hey, Renter</h2>
+      <h3 class="earning">Your Earning is <span class="highlight">$100</span></h3>
+    </div>
+    <!-- Renter will be replaced by User name dynamically -->
+    <!-- Here, We will display any initial message to the renter after
+         registeration -->
+         
+    <!-- Empty if no vehicle is added -->
+    <!-- Render everytime when any changes made -->
+
+    <!-- Vehicle Details -->
+    <!-- Vehicle Name, Model, Number, Type (Bike or Car), Gear, Fuel,
+         Travelled, Mileage, Image -->
+    <!-- Status, Rented By -->
+
+    <div class="py-4 d-flex justify-content-center">
+      <button onclick="location.href = '/renter-profile/add-vehicle';" 
+        class="btn-custom mt-2 mb-4">
+        Add a Vehicle
+      </button>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <% vehicles.forEach((vehicle) => { %>
+        <div class="col-md-4 col-sm-10 vehicle pt-3 pb-4 m-3">
+          <div class="box d-flex justify-content-center align-items-center">
+            <table>
+              <tr>
+                <td>
+                  <span class="bold">Vehicle : </span>
+                  <%= vehicle.name %>
+                </td>
+                <td>
+                  <span class="bold">Model : </span>
+                  <%= vehicle.model %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="bold">Type : </span>
+                  <% if(vehicle.wheels === 2) { %>
+                      Two
+                  <% } else { %>
+                      Four
+                  <% } %>
+                  Wheeler
+                </td>
+                <td>
+                  <span class="bold">Gear : </span>
+                  <%= vehicle.gear %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="bold">Fuel : </span>
+                  <%= vehicle.fuel %>
+                </td>
+                <td>
+                  <span class="bold">Travelled : </span>
+                  <%= vehicle.travelled %> kms
+                </td>
+              </tr>
+              <tr>
+                <td><span class="bold">Mileage : </span>
+                  <%= vehicle.mileage %> km/l
+                </td>
+                <td>
+                  <span class="bold">Status : </span>
+                  
+                  <% if(vehicle.isRented === true) { %>
+                    <span class="green">
+                      Rented
+                    </span>
+                  <% } else { %>
+                    <span class="red">
+                      Not Rented
+                    </span>
+                  <% } %>
+                  <!-- Red if not rented and Green if rented -->
+                  <!-- Status = Rented or Not Rented -->
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="mt-3 d-flex justify-content-around">
+            <button class="btn btn-outline-info rounded-circle">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+            <button class="btn btn-info rounded-circle">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
+          
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+  </section>

@@ -1,0 +1,33 @@
+
+  <section id="place-order">
+    <form action="/vehicles-list/place-order" method="post"
+     class="d-flex justify-content-center align-items-start flex-column pt-5 pb-0 px-4">
+      <div>
+        <label for="">Booking For : </label>
+        <input type="radio" name="bookingFor" id="days" 
+        value="days" checked> Days
+        <input type="radio" name="bookingFor" id="hours" 
+        value="hours"> Hours
+      </div>
+      
+      <div class="days">
+        From : <input type="date" class="date" name="fromDate">
+        To : <input type="date" class="date" name="toDate">
+      </div>
+      <div class="hours">
+        From : <input type="time" class="time" name="fromTime">
+        To : <input type="time" class="time" name="toTime">
+      </div>
+
+      <div>
+        <label for="address">Enter your delivery address : </label><br>
+        <textarea name="address" id="address" cols="40" rows="3"></textarea>
+      </div>
+      <div>
+        <button type="submit" class="btn-custom m-3">Place Order</button>
+        <button class="btn-custom m-3">Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <script src="/js/place-order.js"></script>
