@@ -627,16 +627,19 @@ header {
   padding: 10px 15px;
 }
 
+#place-order {
+  min-height: 90vh;
+  color: #F4F2FF;
+}
+
+#place-order form {
+  background-color: #252A34;
+  -webkit-box-shadow: 2px 2px 10px 2px #e4e2e2;
+          box-shadow: 2px 2px 10px 2px #e4e2e2;
+}
+
 input[type="radio"] {
   cursor: pointer;
-}
-
-.days {
-  display: block;
-}
-
-.hours {
-  display: none;
 }
 
 section.status {

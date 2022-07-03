@@ -1,10 +1,14 @@
 
+#place-order{
+  min-height: 90vh;
+  color: $light;
+
+  form{
+    background-color: $dark;
+    box-shadow: $boxShadow;
+  }
+}
+
 input[type="radio"]{
   cursor: pointer;
-}
-.days{
-  display: block;
-}
-.hours{
-  display: none;
 }

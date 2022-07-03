@@ -1,31 +1,72 @@
 
-  <section id="place-order">
-    <form action="/vehicles-list/place-order" method="post"
-     class="d-flex justify-content-center align-items-start flex-column pt-5 pb-0 px-4">
-      <div>
-        <label for="">Booking For : </label>
-        <input type="radio" name="bookingFor" id="days" 
-        value="days" checked> Days
-        <input type="radio" name="bookingFor" id="hours" 
-        value="hours"> Hours
+  <section id="place-order" class="flex-wrap d-flex justify-content-center align-items-center">
+    <div class="vehicle py-4 px-3 mx-4 mt-5 mb-2">
+      <div class="d-flex justify-content-center align-items-center flex-column">
+        <h3>Vehicle Info.</h3>
+        <table>
+          <tr>
+            <td><span class="bold">Vehicle Owner : </span>
+              Steve Rogers
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="bold">Vehicle : </span>
+              Audi
+            </td>
+            <td>
+              <span class="bold">Model : </span>
+              Audi A6
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="bold">Type : </span>
+              Four Wheeler
+            </td>
+            <td>
+              <span class="bold">Gear : </span>
+              Automatic
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="bold">Fuel : </span>
+              Diesel
+            </td>
+            <td>
+              <span class="bold">Travelled : </span>
+              12,000 kms
+            </td>
+          </tr>
+          <tr>
+            <td><span class="bold">Mileage : </span>
+              50 km/l
+            </td>
+            <td><span class="bold">Vehicle Number : </span>
+              6448
+            </td>
+          </tr>
+        </table>
       </div>
-      
-      <div class="days">
-        From : <input type="date" class="date" name="fromDate">
-        To : <input type="date" class="date" name="toDate">
-      </div>
-      <div class="hours">
-        From : <input type="time" class="time" name="fromTime">
-        To : <input type="time" class="time" name="toTime">
-      </div>
+    </div>
 
+    <form action="/vehicles-list/place-order" method="post"
+     class="d-flex align-items-center flex-column py-4 px-4 m-3">
+
+      From : <input type="date" class="form-control w-75 my-1" name="fromDate">
+      To : <input type="date" class="form-control w-75 my-1" name="toDate">
       <div>
-        <label for="address">Enter your delivery address : </label><br>
-        <textarea name="address" id="address" cols="40" rows="3"></textarea>
+        <label for="address" class="mt-3">Enter your delivery address : </label>
+        <textarea class="form-control my-2" name="address" id="address" rows="3"></textarea>
       </div>
       <div>
-        <button type="submit" class="btn-custom m-3">Place Order</button>
-        <button class="btn-custom m-3">Cancel</button>
+        <label for="phone" class="mt-2">Enter Phone Number : </label>
+        <input type="number" class="form-control mt-2 mb-3" id="phone" name="phone">
+      </div>
+      <div>
+        <button type="submit" class="btn-custom m-2">Place Order</button>
+        <button class="btn-custom m-2">Cancel</button>
       </div>
     </form>
   </section>
