@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status</title>
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
+<script>
+    let id='<%= data._id%>'
+    console.log(id) 
+    
+let socket=io()
+socket.emit('join',`order_${id}`)
+socket.on('orderUpdated',( data )=>{
+//     new Noty ( {
+// type : ' success ' ,
+// timeout : 1000 ,
+// text : ' Order updated " ,
+// progressBar : false ,
+// - } ) . show ( ) ; You , a few seconds ago Uncommitted changes
+console.log("data updated")
+})
+</script>
+
+<body>
+    <h3>Confirmed</h3>
+    <h3>Vehicle on the way</h3>
+    <h3>order recived</h3>
+    <h3>Completed</h3>
+
+
+
+</body>
+</html>

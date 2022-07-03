@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rented Vehicles</title>
+</head>
+<body>
+    <% if (messages.error) { %>
+        <span class="text-red-500 text-sm"><%= messages.error %></span>
+    
+      <% } %>
+    <% if(data.length>0) { %>
+
+    <table>
+        
+        <th>VehicleName</th>
+        <th>VehicleType</th>
+        <th>model</th>
+        <th>Fuel Type</th>
+        <th>Travelled</th>
+        <th>Mileage</th>
+        <th>VehicleNumber</th>
+        <th>Booked</th>
+        <th>image</th>
+        <th>Booked By</th>
+        <th>Booked For</th>
+
+        <% for(var i=0; i<data.length; i++) {%>
+                   
+                   
+            <tr>
+                <td><%= data[i]._id %></td>
+                    
+                <td><%= data[i].VehicleName %></td>
+                <td><%= data[i].VehicleType %></td>
+                <td><%= data[i].model %></td>
+                <td><%= data[i].Fuel %></td>
+                <td><%= data[i].Travelled %></td>
+                <td><%= data[i].Mileage %></td>
+
+                <td><%= data[i].VehicleNumber %></td>
+                <td><%= data[i].booked %></td>
+              <td>  <img src="<%= data[i].image %>"></td>
+                <% if(owners[i]  == undefined && duration[i] == undefined) { %>
+                <td>--</td>   
+                <td>--</td>   
+                
+                <%} else { %>
+                        
+                <td><%= owners[i] %></td>  
+                <td><%= duration[i]  %> Days</td>
+                <% }%> 
+
+
+               <td> <button><a href="/update/<%= data[i]._id %>">Update</a></button></td>
+                
+                <td><button><a href="/delete/<%= data[i]._id %>">delete</a></button></td>
+                
+              </tr>
+             <% } %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <h2> <a href="/Add"> Add Your  First Vehicle</a> </h2>
+        <% } %>
+
+</body>
+</html>

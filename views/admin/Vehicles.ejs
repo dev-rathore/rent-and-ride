@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All vehicles</title>
+</head>
+<body>
+    <table>
+        <tbody>
+            
+            <% data.forEach((vehicle) => { %>
+            <tr>
+                <td><%= vehicle.r_id%>  </td>
+   
+                <td><%= vehicle.VehicleName%>  </td>
+                <td><%= vehicle.VehicleType%>  </td>
+                <td><%= vehicle.VehicleCategory%>  </td>
+                <td><%= vehicle.VehicleNumber%>  </td>
+                <td><%= vehicle.booked%>  </td>
+
+               <td><img src='<%=vehicle.image%>' > </img></td>
+                <td><button><a href='/dashboard/delete/<%=vehicle._id%>'> Delete</a></button></td>   
+                 
+            </tr>
+           
+            <% }) %>
+        </tbody>
+    </table>   
+</body>
+</html>

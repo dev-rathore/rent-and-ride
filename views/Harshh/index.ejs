@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    
+    <h1>best of luck for the project</h1>
+    <buttons>call</button>
+    <Form action="/register" method="post">
+        <% if(messages.error) { %>
+            <span class="text-red-500 text-sm"><%= messages.error %></span>
+            <% } %>
+        <input type="text" name="username" placeholder="Enter Your username" >
+        <input type="text" name="email" placeholder="Enter Your email" >
+        <input type="text" name="password" placeholder="Enter Your password ">
+        <input type="hidden" name="role" value="<%= role %>">
+
+        <input type="submit" value="submit" >
+    </Form>
+    <button id="show">Show</button>
+</body>
+</html>

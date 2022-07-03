@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order</title>
+</head>
+<body>
+    <table>
+        <tbody>
+            
+            <tr>
+                <td><%= data.r_id%>  </td>
+   
+                <td><%= data.VehicleName%>  </td>
+                <td><%= data.VehicleType%>  </td>
+                <td><%= data.model%>  </td>
+                <td><%= data.Travelled%>  </td>
+                <td><%= data.Mileage%>  </td>
+                <td><%= data.VehicleNumber%>  </td>
+
+               <td><img src='<%=data.image%>' > </img></td>
+                 <td><%=bill %></td>
+                 <td><%=location %></td>
+                 <td><%=TotalDays %></td>
+                 <td><%=mobile %></td>
+
+
+
+            </tr>
+           
+        </tbody>
+    </table>
+    <form action="/placeOrder" method="post">
+        <input type="hidden" name="vehicle" value="<%= JSON.stringify(data) %> ">
+        <input type="hidden" name="bill" value="<%=bill %>">
+        <input type="hidden" name="location" value="<%=location %>">
+        
+        <input type="hidden" name="mobile" value="<%=mobile %>">
+        <input type="hidden" name="TotalDays" value="<%=TotalDays %>">
+            <input type="submit" value="Confirm payment">
+
+
+    </form>
+</body>
+</html>
