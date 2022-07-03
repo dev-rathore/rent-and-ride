@@ -1,19 +1,19 @@
 
   <section id="payment">
-    <form action="/vehicles-list/payment" method="post" class="d-flex justify-content-center align-items-center flex-column">
+    <form action="/rider-profile/confirm-payment" method="post" class="d-flex justify-content-center align-items-center flex-column">
       <div class="box py-4 px-3 mx-4 mt-5 mb-2">
         <div class="d-flex justify-content-center align-items-center flex-column">
           <h3>Scan the QR code to Pay</h3>
           <table>
             <tr>
-              <td colspan="2"><span class="bold">Vehicle Owner : </span>
-                Steve Rogers
+              <td colspan="2"><span class="bold">Order Id : </span>
+                <%= data.r_id%>
               </td>
             </tr>
             <tr>
               <td>
                 <span class="bold">Model : </span>
-                Audi A6
+                <%= data.Model%>
               </td>
               <td>
                 <span class="bold">Type : </span>
@@ -22,33 +22,43 @@
             </tr>
             <tr>
               <td><span class="bold">Vehicle Number : </span>
-                6448
+                <%= data.VehicleNumber%>
               </td>
               <td>
                 <span class="bold">Bill : </span>
-                $100
+                $<%=bill %>
               </td>
             </tr>
             <tr>
               <td><span class="bold">Booking For : </span>
-                5 Days
+                <%=totalDays %> Days
               </td>
               <td>
                 <span class="bold">Phone : </span>
-                94524 87624
+                <%=mobile %>
               </td>
             </tr>
             <tr>
               <td colspan="2">
                 <span class="bold">Address : </span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore sed suscipit recusandae reiciendis natus dolore ducimus accusantium est consequatur! Esse quis repudiandae vel repellendus facilis magnam est aut quo voluptas!
+                <%=location %>
               </td>
             </tr>
           </table>
 
+
+
           <div>QR Code</div>
         </div>
       </div>
+
+      <input type="hidden" name="vehicle" value="<%= JSON.stringify(data) %> ">
+
+      <input type="hidden" name="bill" value="<%=bill %>">
+      <input type="hidden" name="location" value="<%=location %>">
+      
+      <input type="hidden" name="mobile" value="<%=mobile %>">
+      <input type="hidden" name="totalDays" value="<%=totalDays %>">
 
       <button class="btn-submit" type="submit">Confirm</button>
     </form>

@@ -9,24 +9,24 @@
 
     <div class="container-fluid">
       <div class="row justify-content-center">
-        <% vehicles.forEach((vehicle) => { %>
+        <% for(var i=0; i<data['h'].length; i++) {%>
         <div class="col-md-4 col-sm-10 box pt-3 pb-4 m-3">
           <div class="d-flex justify-content-center align-items-center">
             <table>
               <tr>
                 <td>
                   <span class="bold">Vehicle : </span>
-                  <%= vehicle.name %>
+                  <%= data['a'][i].VehicleName %>
                 </td>
                 <td>
-                  <span class="bold">Model : </span>
-                  <%= vehicle.model %>
+                  <span class="bold">Vehicle Owner : </span>
+                  <%= data['b'][i] %>
                 </td>
               </tr>
               <tr>
                 <td>
                   <span class="bold">Type : </span>
-                  <% if(vehicle.wheels === 2) { %>
+                  <% if(data['a'][i].Type === 2) { %>
                       Two
                   <% } else { %>
                       Four
@@ -34,40 +34,41 @@
                   Wheeler
                 </td>
                 <td>
-                  <span class="bold">Gear : </span>
-                  <%= vehicle.gear %>
+                  <span class="bold">Status : </span>
+                  <%= data['h'][i].status %>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span class="bold">Fuel : </span>
-                  <%= vehicle.fuel %>
+                  <span class="bold">Placed At : </span>
+                  <%= moment(data['h'][i].createdAt).format('hh:mm') %>
                 </td>
                 <td>
-                  <span class="bold">Travelled : </span>
-                  <%= vehicle.travelled %> kms
+                  <span class="bold">Booked On : </span>
+                  <%= moment(data['h'][i].createdAt).format('DD-MM-YYYY') %>
                 </td>
               </tr>
               <tr>
-                <td><span class="bold">Mileage : </span>
-                  <%= vehicle.mileage %> km/l
+                <td><span class="bold">Bill : </span>
+                  $<%= data['h'][i].bill %>
                 </td>
                 <td>
                   <span class="bold">Booked For : </span>
-                  10 Days
+                  <%= data['h'][i].time %> Days
                 </td>
               </tr>
               <tr>
                 <td colspan="2" class="text-center">
-                  <button onclick="location.href = '/vehicles-list/all-rides/order-details';" class="btn-outline-custom white">
-                    Order Details</button>
+                  <button onclick="location.href = `/rider-profile/all-orders/single-order/<%= data['h'][i]._id %>`;" class="btn-outline-custom white">
+                    Order Details</button> 
+
                 </td>
                 
               </tr>
             </table>
           </div>
         </div>
-        <% }) %>
+        <% } %>
       </div>
     </div>
   </section>

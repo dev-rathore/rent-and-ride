@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Orders</title>
+
     <script src="/socket.io/socket.io.js"></script>
-    
-</head>
+
 <script>
 let socket=io()
 socket.emit('join','adminRoom')
@@ -20,25 +13,26 @@ window.location.reload();
 })
 
 </script>
-<body >
+
+<section id="dashboard">
 
     <table>
         <th>User id</th>
         <th>Renter id</th>       
-
+    
       <th>VehicleName</th>  
       <th>VehicleNumber</th>
       <th>Duration</th>       
       <th>Bill</th>
       <th>Status</th>
       <th>Action</th>       
-
-
-
-
+    
+    
+    
+    
         <tbody id="test">
                     <% for (var i =0; i <order.length ;  i++ ) { %>
-
+    
                     <tr>
                  <td><%= moment(order[i].createdAt).format('DD-MM-YYYY') %></td>
             <td><%= order[i].user_id %>  </td>
@@ -52,13 +46,13 @@ window.location.reload();
         <td> <%= order[i].status%>  </td>
         <td> <%= moment(order[i].createdAt).format('hh : mm ')%>  </td>
         
-
+    
         <td >
-
+    
             <form action="/updateStatus" method="post">
                 <select value="" name="status" id=""  onchange="this.form.submit()" > 
                     <option name="dsd" hidden>Hidden option</option>
-
+    
                     <option value="" disabled selected hidden>Please Choose...</option>
                     
                     <option >  Confirmed</optison>   
@@ -67,19 +61,18 @@ window.location.reload();
                         <option > Completed</option>            
                      <input type="hidden" name="id" value=" <%= JSON.stringify(order[i]._id) %>" >
                      <input type="hidden" name="Vehicle" value=" <%= JSON.stringify(order[i].booked_vehicle._id) %>" >
-
+    
                     </select>
                         </form>
-
-
+    
+    
             </td>
           
         </tr>   
             <% } %>   
-
-
+    
+    
             
         </tbody>
     </table>   
-    </body>
-</html>
+</section>

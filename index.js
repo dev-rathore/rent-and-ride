@@ -1,11 +1,12 @@
 const axios = require('express')
 const express = require('express')
+const expressLayouts = require('express-ejs-layouts')
 
 const path = require('path')
 const mongoose = require('mongoose')
 const session = require('express-session');
 const MongoDbSession = require('connect-mongodb-session')(session)
-const Model = require('./models/User')
+const UserModel = require('./models/User')
 const vehicleModel = require('./models/renter/Vehicle')
 const Order = require('./models/booker/order')
 const Income=require('./models/renter/income')
@@ -19,11 +20,20 @@ var validator = require('validator');
 const Emitter=require('events');//this is used to emit events
 const moment=require('moment');
 const { json } = require('express');
+
 const app = express();
 app.use(express.static(__dirname + '/public'))
+// app.use('public', express.static)//setting public folder as static which means compiler will look all the js and front end fiels in public folder by default
+//app.set('views', path.join(__dirname, '/views'))//setting up all the frontend file
+app.use(express.urlencoded({ extended: true }));//so we can accces the form input values
+app.use(express.json())
+
+app.use(expressLayouts);
+app.set('layout', './pages/layout.ejs');
+app.set('view engine', 'ejs')
+
 mongoose.connect("mongodb://localhost:27017/college", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(() => console.log("data base is connected")).catch((err) => console.log(err + "ererer"))
 
-app.use('public', express.static)//setting public folder as static which means compiler will look all the js and front end fiels in public folder by default
 const store = new MongoDbSession({
     uri: 'mongodb://localhost:27017/college',
     collection: 'authSession'
@@ -41,12 +51,7 @@ init(passport)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash());
-app.set('views', path.join(__dirname, '/views'))//setting up all the frontend file
-app.use(express.urlencoded({ extended: false }));//so we can accces the form input values
-app.use(expressLayouts);
-app.set('layout', './pages/layout.ejs');
-app.set('view engine', 'ejs')
-app.use(express.json())
+
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./images");
@@ -88,7 +93,7 @@ let data = await vehicleModel.find()
     res.render('./admin/Vehicles', { data: data })
 })
 app.get('/dashboard/manageuser', isadmin, async (req, res) => {
-    let data = await Model.find()
+    let data = await UserModel.find()
 
     res.render('./admin/User', { data: data })
 })
@@ -97,7 +102,7 @@ app.get('/dashboard/delete/:id', isadmin, async (req, res) => {
     res.redirect('/dashboard/managevehicles')
 })
 app.get('/dashboard/delete/user/:id', isadmin, async (req, res) => {
-    await Model.findByIdAndDelete({ _id: req.params.id })
+    await UserModel.findByIdAndDelete({ _id: req.params.id })
     res.redirect('/dashboard/manageuser')
 })
 
@@ -105,87 +110,89 @@ app.get('/profile', islogin, (req, res) => {
     res.send("you are logged in")
 })
 
-//renter routes
-app.get('/Add', islogin, isrenter, (req, res) => {
+// Renter Routes
+app.get('/renter-profile/add-vehicle', islogin, isrenter, (req, res) => {
 
-    res.render('./renter/VehicleInfo', { data: "hello" })
+    res.render('renter/add-vehicle', {title: 'Add Vehicle', data: "hello" })
 })
-app.post('/Add', islogin, isrenter, upload.single("image"), async (req, res) => {
-    const { VehicleName, VehicleType, model, VehicleNumber,Fuel,Travelled,Mileage } = req.body
-    if(!VehicleName || !VehicleType || !VehicleNumber || !model || !Fuel || !Travelled || !Mileage) {
+
+app.post('/renter-profile/add-vehicle', islogin, isrenter, upload.single("image"), async (req, res) => {
+    const { vehicleName, type, gear, model, vehicleNumber, fuel, travelled,mileage } = req.body
+    if(!vehicleName || !type || !vehicleNumber || !gear| !model || !fuel || !travelled || !mileage) {
         req.flash('error', 'All fields are required')
-        return res.redirect('/Add')
+        return res.redirect('/renter-profile/add-vehicle')
     }
-    let exits = await vehicleModel.findOne({ VehicleNumber })
+    let exits = await vehicleModel.findOne({ vehicleNumber })
     if (exits) {
         req.flash('error','A Vehicle is Already Rented with this number') 
 
-        res.render('./renter/VehicleInfo')
+        res.render('renter/add-vehicle', {title: 'Add Vehicle'})
     }
     else {
         let newVehicle = new vehicleModel({
             r_id: req.session.r_id,
-            VehicleName: VehicleName,
-            VehicleType: VehicleType,
-            model:model,
-            Fuel:Fuel,
-            Travelled:Travelled,
-            Mileage:Mileage,
-            VehicleNumber: VehicleNumber,
+            VehicleName: vehicleName,
+            Type: type,
+            Gear: gear,
+            Model:model,
+            Fuel:fuel,
+            Travelled:travelled,
+            Mileage:mileage,
+            VehicleNumber: vehicleNumber,
             image: req.file.path
         })
-        newVehicle.save().then(() => res.redirect('/my-vehicles')).catch((err) => console.log(err))
-
+        newVehicle.save().then(() => res.redirect('/renter-profile')).catch((err) => console.log(err))
     }
+})
 
-})
-app.get('/update/:id', islogin, isrenter, async (req, res) => {
+app.get('/renter-profile/update/:id', islogin, isrenter, async (req, res) => {
+    
     let data = await vehicleModel.findOne({ _id: req.params.id })
-    res.render('./renter/Update', { data: data })
+    res.render('renter/update-vehicle', { title: 'Update Vehicle', data: data })
 })
-app.post('/update', islogin, isrenter, async (req, res) => {
+
+app.post('/renter-profile/update', islogin, isrenter, async (req, res) => {
 
     var id = JSON.parse(req.body.id)
 
     await vehicleModel.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (err, doc) => {
         if (!err) {
-            res.redirect('/my-vehicles');
+            res.redirect('/renter-profile');
         }
         else {
             console.log("can not update data");
         }
     })
-
 })
-app.get('/delete/:id', islogin, isrenter, async (req, res) => {
+
+app.get('/renter-profile/delete/:id', islogin, isrenter, async (req, res) => {
     let data = await vehicleModel.findById({ _id: req.params.id })
     if (data.booked == true) {
 
-        res.send("You can not Delete A Boooked Vehicle")
+        res.send("You can not Delete A Booked Vehicle")
     }
     else {
 
         await vehicleModel.findByIdAndDelete({ _id: req.params.id })
-        res.redirect('/my-vehicles')
+        res.redirect('/renter-profile')
     }
 })
 
-app.get('/my-vehicles', islogin, isrenter, async (req, res) => {
+app.get('/renter-profile', islogin, isrenter, async (req, res) => {
 var owners=[]
 var duration=[]
     let list = await vehicleModel.find({ r_id: req.session.r_id })
    let id=String(req.session.r_id)
     let ownerOrder=await Order.find({r_id:id})
     for (let i = 0; i < ownerOrder.length; i++) {
-        let data=await Model.findOne({_id:ownerOrder[i].user_id})
-        console.log(data)
+        let data=await UserModel.findOne({_id:ownerOrder[i].user_id})
+        // console.log(data)
         owners[i]=data.username
         duration[i]=ownerOrder[i].time;
     }
-    res.render('./renter/MyVehicles', { data: list,owners:owners,duration:duration})
-    
-
+    res.render('renter/renter-profile', { title : 'Renter Profile', data: list,owners:owners,duration:duration})
 });
+
 
 const _getRedirect=(req)=>
   {
@@ -195,18 +202,18 @@ const _getRedirect=(req)=>
         return '/dashboard'
         }
         else if (req.user.role == 'renter') {
-                return '/my-vehicles'
+                return '/renter-profile'
        
         }
         else {
     
-            return '/vehicles'
+            return '/rider-profile'
         }
     
   }
 
 app.get('/login', (req, res) => {
-    res.render('login')
+    res.render('login', {title: 'Login'})
 })
 
 app.post('/login', (req, res) => 
@@ -217,7 +224,7 @@ app.post('/login', (req, res) =>
          req.flash('error', 'All fields are required')
          return res.redirect('/login')
      } 
-     passport.authenticate('local',(err,user,info)=>//this will calll the init function in passport js
+     passport.authenticate('local',(err,user,info)=>//this will call the init function in passport js
        {
 
         if(err)
@@ -240,20 +247,22 @@ app.post('/login', (req, res) =>
             return next(err)
 
           }
-          return res.redirect(_getRedirect(req))//caalling function to check the role
+          
+          return res.redirect(_getRedirect(req))//calling function to check the role
         })
        })(req,res)
 })
+
+// Home Route
 app.get('/',(req,res)=>{
-    res.render('Home')
-
-
+    res.render('home', {title: 'Rent & Ride'})
 })
 
 app.get('/register/:role',(req,res)=>{
     let role=req.params.role
-    res.render('index',{role:role})
+    res.render('register',{title: 'Register', role:role})
 })
+
 app.post('/register', async (req, res) => {
     const { username, email, password, role } = req.body
     // Validate request 
@@ -267,32 +276,32 @@ app.post('/register', async (req, res) => {
    if(!right)
    {
     if(!validator.isAlpha(req.body.username)){
-        req.flash('error','invalid name should not contain a number or symbol') 
+        req.flash('error','Invalid name, it should not contain a number or symbol') 
        return  res.redirect(`/register/${role}`)
 
     } 
     if(!validator.isEmail(req.body.email)){
-        req.flash('error','invalid email') 
+        req.flash('error','Invalid Email') 
         return  res.redirect(`/register/${role}`)
  
     }
-    if(!validator.isStrongPassword(req.body.password)){
-        req.flash('error','password must contain capital letter,a number,a special character') 
-        return  res.redirect(`/register/${role}`)
-    }
+    // if(!validator.isStrongPassword(req.body.password)){
+    //     req.flash('error','password must contain capital letter,a number,a special character') 
+    //     return  res.redirect(`/register/${role}`)
+    // }
     right=true
    }
    
-    let user = await Model.findOne({ email })
+    let user = await UserModel.findOne({ email })
     if (user) {
         req.flash('error', 'Email already taken')
       
-        res.render('index',{role:role})
+        res.render('register',{ title: 'Register', role:role})
     }
     else {
               const hashpw=await bcrypt.hash(req.body.password,10)
           
-        let newUser = new Model({
+        let newUser = new UserModel({
             username: username,
             email: email,
             password: hashpw,
@@ -302,7 +311,7 @@ app.post('/register', async (req, res) => {
                 if(user)
             {
                 if(role == 'renter'){
-                    await Model.findOne({email:req.body.email},(err,doc)=>{
+                    await UserModel.findOne({email:req.body.email},(err,doc)=>{
                         let newRenter=new Income({
                             r_id:doc._id,
                             Income:0
@@ -314,30 +323,28 @@ app.post('/register', async (req, res) => {
                                 }
               res.redirect('/login')
         }).catch((err) => console.log(err))
-     
     }
 })
 
-//booker routes
-app.get('/vehicles',isrider, async (req, res) => {
+// Rider Routes
+app.get('/rider-profile',isrider, async (req, res) => {
     let vehicles = await vehicleModel.find({ booked: false });
-    res.render('./booker/vehicles', { data: vehicles })
+    res.render('rider/rider-profile', { title : 'Rider Profile', data: vehicles })
 })  
-app.post('/order', islogin, async (req, res) => {
+
+app.post('/rider-profile/place-order', islogin, async (req, res) => {
     let my = req.body.vehicle;
     let data = JSON.parse(my)
-    let owner = await Model.findOne({ _id: data.r_id })
-    res.render('./booker/Order', { data: data, owner: owner })
+    let owner = await UserModel.findOne({ _id: data.r_id })
+    res.render('rider/place-order', { title: 'Place Order', data: data, owner: owner })
 
 })
-app.post('/confirm-order', (req, res) => {
+app.post('/rider-profile/confirm-order', (req, res) => {
     let my = req.body.vehicle;
 var TotalTime
 var bill;
     if(req.body.start && req.body.end)
     {
-
-    
         let date_1 = new Date(req.body.start);
         let date_2 = new Date(req.body.end);
         let difference = date_2.getTime() - date_1.getTime();
@@ -346,7 +353,7 @@ var bill;
          bill=TotalTime*700;
         if(TotalTime<0)
         {
-            return  res.render('./booker/err')
+            return  res.render('./rider/err', {title: 'Err'})
          }
 }
 
@@ -354,10 +361,10 @@ var bill;
     let mobile=req.body.mobile
     var vehicle = JSON.parse(my)
 
-     res.render('./booker/orderSummry',{data:vehicle,bill:bill,location:location,mobile:mobile,TotalDays:TotalTime})
+     res.render('rider/confirm-order',{title: 'Payment', data:vehicle,bill:bill,location:location,mobile:mobile,totalDays:TotalTime})
 
 })
-app.post('/placeOrder',async(req,res)=>{
+app.post('/rider-profile/confirm-payment',async(req,res)=>{
     let my = req.body.vehicle;
     var vehicle = JSON.parse(my)
 
@@ -368,7 +375,7 @@ app.post('/placeOrder',async(req,res)=>{
                 user_id: req.user._id,
                 r_id:vehicle.r_id,
                 booked_vehicle: vehicle,
-                time: req.body.TotalDays,
+                time: req.body.totalDays,
                 bill: req.body.bill,
                 mobile:req.body.mobile,
                 location:req.body.location
@@ -377,7 +384,7 @@ app.post('/placeOrder',async(req,res)=>{
                 req.flash('success','order placed succsesfully')
                 //use req.app.get('eventEmitter') if moving routs
               eventEmitter.emit ('orderPlaced',result);
-            res.redirect('/All-orders')
+            res.redirect('/rider-profile/all-orders')
 
             }).catch((err) => console.log(err))
 
@@ -388,21 +395,18 @@ app.post('/placeOrder',async(req,res)=>{
     })
 
 })
-app.get('/All-orders', islogin, isrider,async (req, res) => {
+
+app.get('/rider-profile/all-orders', islogin, isrider,async (req, res) => {
     var vehicles = new Array();
     var owners = new Array();
     await Order.find({ user_id: req.user._id }, async (err, orders) => {
         if (orders) {
             for (i = 0; i < orders.length; i++) {
                 vehicles[i] = orders[i].booked_vehicle
-
-
             }
         }
-
-
         for (let i = 0; i < vehicles.length; i++) {
-            await Model.findOne({ _id: vehicles[i].r_id }, (err, doc) => {
+            await UserModel.findOne({ _id: vehicles[i].r_id }, (err, doc) => {
                 if (doc) {
 
                     owners[i] = doc.username
@@ -418,21 +422,19 @@ app.get('/All-orders', islogin, isrider,async (req, res) => {
         data['a'] = vehicles;
         data['b'] = owners;
 
-        res.render('./booker/AllOrders', { data: data,moment:moment })
+        res.render('rider/all-orders', { title: 'All Orders', data: data,moment:moment })
     })
-
 })
 
-app.get('/singelorder/:id',async(req, res) => {
+app.get('/rider-profile/all-orders/single-order/:id',async(req, res) => {
    let data=await Order.findById({_id:req.params.id})
    // Join 
-     res.render('./booker/singelOrder',{data:data})
+     res.render('rider/single-order',{title: 'Order Details', data:data})
 })
 
 
- 
 const server = app.listen(80, () => {
-    console.log("Server has been started");
+    console.log("Server is listening on port 80");
 })
 const io=require('socket.io')(server)
 io.on('connection',(socket)=>{

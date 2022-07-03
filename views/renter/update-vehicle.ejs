@@ -1,27 +1,24 @@
 
-  <section id="add-vehicle">
-    <form class="add-vehicle-form" action="/renter-profile/add-vehicle" method="post" enctype="multipart/form-data">
+<section id="add-vehicle">
+    <form class="add-vehicle-form" action="/renter-profile/update" method="post">
 
-      <% if (messages.error) { %>
-        <span class="text-red-500 text-sm"><%= messages.error %></span>
-      <% } %>
-
-      <h3>Enter Vehicle Details</h3>
+      <h3>Update Vehicle Details</h3>
+      <input type="hidden" name="id" value="<%= JSON.stringify(data._id) %> "><br>
       <table>
         <tr>
           <td><label for="">Name </label></td>
           <td>
             <!-- <input class="form-control" name="name" type="text" placeholder="Enter Vehicle Name" enctype="multipart/form-data"> -->
-            <input class="form-control" name="vehicleName" type="text" placeholder="Enter Vehicle Name">
+            <input class="form-control" name="vehicleName" type="text" placeholder="Enter Vehicle Name" value='<%= data.VehicleName %>'>
           </td>
         </tr>
         <tr>
           <td><label for="">Model </label></td>
-          <td><input class="form-control" name="model" type="text"></td>
+          <td><input class="form-control" name="model" type="text" value='<%= data.Model %>'></td>
         </tr>
         <tr>
           <td><label for="">Number </label></td>
-          <td><input class="form-control" name="vehicleNumber" type="number" placeholder="Enter Vehicle Number"></td>
+          <td><input class="form-control" name="vehicleNumber" type="number" placeholder="Enter Vehicle Number" value='<%= data.VehicleNumber %>'></td>
         </tr>
         <tr>
           <td><label for="">Type </label></td>
@@ -44,6 +41,7 @@
         <tr>
           <td><label for="">Fuel </label></td>
           <td>
+            <!-- value='<%= //data.Fuel %>' -->
             <select class="form-select" name="fuel" id="fuel">
               <option value="Petrol">Petrol</option>
               <option value="Diesel">Diesel</option>
@@ -54,18 +52,18 @@
         <tr>
           <td><label for="">Travelled </label></td>
           <td><input class="form-control" name="travelled" type="number" 
-              placeholder="kms"></td>
+              placeholder="kms" value='<%= data.Travelled %>'></td>
         </tr>
         <tr>
           <td><label for="">Mileage </label></td>
           <td><input class="form-control" name="mileage" type="number"
-              placeholder="km/l"></td>
+              placeholder="km/l" value='<%= data.Mileage %>'></td>
         </tr>
         <tr>
           <td><label for="">Image </label></td>
-          <td><input class="form-control" type="file" id="img" name="image" accept="image/*"></td>
+          <td><input class="form-control" type="file" id="img" name="image" accept="image/*" value='<%= data.image %>'></td>
         </tr>
       </table>
-      <button class="btn-custom mt-3" type="submit" name="submit">Add</button>
+      <button class="btn-custom mt-3" type="submit" name="submit">Update</button>
     </form>
   </section>

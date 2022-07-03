@@ -1,3 +1,24 @@
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    let id='<%= data._id%>'
+    console.log(id) 
+    
+    let socket=io()
+    socket.emit('join',`order_${id}`)
+    socket.on('orderUpdated',( data )=>{
+    //     new Noty ( {
+    // type : ' success ' ,
+    // timeout : 1000 ,
+    // text : ' Order updated " ,
+    // progressBar : false ,
+    // - } ) . show ( ) ; You , a few seconds ago Uncommitted changes
+    console.log("data updated")
+    })
+    
+</script>
+
 <section class="status m-auto">
   <div>
       <div class="status-box"> 

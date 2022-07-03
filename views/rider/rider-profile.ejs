@@ -1,30 +1,34 @@
 
 <section id="vehicles-list" class="container-fluid">
 	<div class="row justify-content-center py-4">
-		<% vehicles.forEach((vehicle) => { %>
-		<div class="vehicle-card col col-md-3 col-sm-9 p-0 custom-bottom-hover m-4 h-100">
-			<img src="/assets/<%= vehicle.image %>" 
+		<% data.forEach((vehicle) => { %>
+		<form action="/rider-profile/place-order" method="post" class="vehicle-card col col-md-3 col-sm-9 p-0 custom-bottom-hover m-4 h-100">
+			<!-- ERROR here -->
+			<img src="..\images\<%= vehicle.image %>" 
 			alt="Vehicle-Image" class="d-block w-100 bg-white">
 	
 			<div class="px-4 py-3 d-flex flex-column align-items-center">
-				<p class="text-uppercase"><%= vehicle.gear %></p>
-				<h3 class="card-heading"><%= vehicle.model %></h3>
+				<p class="text-uppercase"><%= vehicle.Gear %></p>
+				<h3 class="card-heading"><%= vehicle.Model %></h3>
 	
 				<div class="w-100 d-flex justify-content-center align-items-center pb-2">
 					<table class="fs-5">
 						<tr>
-							<td align="left" class="td-pr"><%= vehicle.fuel %></td>
-							<td align="left" class="td-pl"><%= vehicle.travelled %> kms</td>
+							<td align="left" class="td-pr"><%= vehicle.Fuel %></td>
+							<td align="left" class="td-pl"><%= vehicle.Travelled %> kms</td>
 						</tr>
 						<tr>
-							<td align="right" class="td-pr"><%= vehicle.mileage %> km/l</td>
+							<td align="right" class="td-pr"><%= vehicle.Mileage %> km/l</td>
 							<td align="right" class="td-pl">$254/Day</td>
 						</tr>
 					</table>
 				</div>
 
+				<input type="hidden" value="<%= JSON.stringify(vehicle) %>" name="vehicle" >
+				
 				<div class="book-now">
-					<button onclick="location.href = '/vehicles-list/place-order';"
+					<button type="submit"
+					data-vehicle="<%= JSON.stringify(vehicle) %>"
 						class="book-now-btn">
 						<span class="shopping-cart">
 							<i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -37,7 +41,7 @@
 				</div>
 			</div>
 	
-		</div>
+		</form>
 		<% }) %>
 	</div>
 </section>
