@@ -68,12 +68,14 @@ app.get("/register", function(req, res){
   res.render('register', {title: 'Register'});
 });
 
+/****************** Rider Routes ********************/
+
 app.get("/vehicles-list", function(req, res){
-  res.render('vehicles-list', {title : 'Vehicles List', vehicles: vehicles});
+  res.render('rider/vehicles-list', {title : 'Vehicles List', vehicles: vehicles});
 });
 
 app.get("/vehicles-list/place-order", function(req, res){
-  res.render('place-order', {title: 'Place Order'});
+  res.render('rider/place-order', {title: 'Place Order'});
 });
 
 app.post("/vehicles-list/place-order", function(req, res){
@@ -82,7 +84,7 @@ app.post("/vehicles-list/place-order", function(req, res){
 });
 
 app.get("/vehicles-list/payment", function(req, res){
-  res.render('payment', {title: 'Payment'});
+  res.render('rider/payment', {title: 'Payment'});
 });
 
 app.post("/vehicles-list/payment", function(req, res){
@@ -90,27 +92,44 @@ app.post("/vehicles-list/payment", function(req, res){
 });
 
 app.get("/vehicles-list/all-rides", function(req, res){
-  res.render('all-rides', {title: 'All Rides', vehicles: vehicles});
+  res.render('rider/all-rides', {title: 'All Rides', vehicles: vehicles});
 });
 
 app.get("/vehicles-list/all-rides/order-details", function(req, res){
-  res.render('order-details', {title: 'Order Details'});
+  res.render('rider/order-details', {title: 'Order Details'});
 });
-
 
 /****************** Renter Routes ********************/
 
 app.get("/renter-profile", function(req, res){
-  res.render('renter-profile', {title : 'Renter Profile', vehicles: vehicles});
+  res.render('renter/renter-profile', {title : 'Renter Profile', vehicles: vehicles});
 });
 
 app.get("/renter-profile/add-vehicle", function(req, res){
-  res.render('add-vehicle', {title: 'Add Vehicle'});
+  res.render('renter/add-vehicle', {title: 'Add Vehicle'});
 });
 
 app.post("/renter-profile/add-vehicle", function(req, res){
   console.log(req.body);
   res.redirect('/renter-profile');
+});
+
+/****************** Admin Routes ********************/
+
+app.get("/dashboard", function(req, res){
+  res.render('admin/dashboard', {title: 'Admin Dashboard'});
+});
+
+app.get("/dashboard/manage-users", function(req, res){
+  res.render('admin/manage-users', {title: 'Manage Users'});
+});
+
+app.get("/dashboard/manage-orders", function(req, res){
+  res.render('admin/manage-orders', {title: 'Manage Orders', vehicles: vehicles});
+});
+
+app.get("/dashboard/manage-vehicles", function(req, res){
+  res.render('admin/manage-vehicles', {title: 'Manage Vehicles', vehicles: vehicles});
 });
 
 app.listen(8080, function(){

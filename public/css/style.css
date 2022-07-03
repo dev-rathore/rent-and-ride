@@ -795,6 +795,10 @@ section.status {
   margin-top: 8px;
 }
 
+#dashboard {
+  min-height: 80vh;
+}
+
 footer {
   margin-top: 50px;
   position: relative;
