@@ -1,10 +1,54 @@
 
   <section id="payment">
-    <form action="/vehicles-list/payment" method="post">
-      <div>From this date/time to this date/time</div>
-      <div>Bill</div>
-      <div>QR Code</div>
-      <p>Scan this QR Code to Pay the Bill</p>
+    <form action="/vehicles-list/payment" method="post" class="d-flex justify-content-center align-items-center flex-column">
+      <div class="box py-4 px-3 mx-4 mt-5 mb-2">
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <h3>Scan the QR code to Pay</h3>
+          <table>
+            <tr>
+              <td colspan="2"><span class="bold">Vehicle Owner : </span>
+                Steve Rogers
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="bold">Model : </span>
+                Audi A6
+              </td>
+              <td>
+                <span class="bold">Type : </span>
+                Four Wheeler
+              </td>
+            </tr>
+            <tr>
+              <td><span class="bold">Vehicle Number : </span>
+                6448
+              </td>
+              <td>
+                <span class="bold">Bill : </span>
+                $100
+              </td>
+            </tr>
+            <tr>
+              <td><span class="bold">Booking For : </span>
+                5 Days
+              </td>
+              <td>
+                <span class="bold">Phone : </span>
+                94524 87624
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <span class="bold">Address : </span>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore sed suscipit recusandae reiciendis natus dolore ducimus accusantium est consequatur! Esse quis repudiandae vel repellendus facilis magnam est aut quo voluptas!
+              </td>
+            </tr>
+          </table>
+
+          <div>QR Code</div>
+        </div>
+      </div>
 
       <button class="btn-submit" type="submit">Confirm</button>
     </form>

@@ -9,6 +9,22 @@
   }
 }
 
+.box{
+  color: $light;
+  background-color: $dark;
+  box-shadow: $boxShadow;
+
+  table{
+    td{
+      padding: 10px 15px;
+    }
+  }
+
+  p{
+    display: inline-block;
+  }
+}
+
 input[type="radio"]{
   cursor: pointer;
 }

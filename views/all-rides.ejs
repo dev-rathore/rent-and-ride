@@ -1,7 +1,73 @@
 
   <section id="all-rides">
-    <p>This page contains list of all vehicles rented by the rider</p>
-    <p>If zero vehicles are rented then it will show no rides yet</p>
+    
+    <!-- If zero vehicles are rented then it will show no rides yet -->
 
-    <a href="/vehicles-list/all-rides/order-details">Order Details</a>
+    <div class="d-flex justify-content-center flex-column align-items-center">
+      <h2 class="mt-3 mb-4 text-center bold highlight">List of all Vehicles Rented</h2>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <% vehicles.forEach((vehicle) => { %>
+        <div class="col-md-4 col-sm-10 box pt-3 pb-4 m-3">
+          <div class="d-flex justify-content-center align-items-center">
+            <table>
+              <tr>
+                <td>
+                  <span class="bold">Vehicle : </span>
+                  <%= vehicle.name %>
+                </td>
+                <td>
+                  <span class="bold">Model : </span>
+                  <%= vehicle.model %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="bold">Type : </span>
+                  <% if(vehicle.wheels === 2) { %>
+                      Two
+                  <% } else { %>
+                      Four
+                  <% } %>
+                  Wheeler
+                </td>
+                <td>
+                  <span class="bold">Gear : </span>
+                  <%= vehicle.gear %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="bold">Fuel : </span>
+                  <%= vehicle.fuel %>
+                </td>
+                <td>
+                  <span class="bold">Travelled : </span>
+                  <%= vehicle.travelled %> kms
+                </td>
+              </tr>
+              <tr>
+                <td><span class="bold">Mileage : </span>
+                  <%= vehicle.mileage %> km/l
+                </td>
+                <td>
+                  <span class="bold">Booked For : </span>
+                  10 Days
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center">
+                  <button onclick="location.href = '/vehicles-list/all-rides/order-details';" class="btn-outline-custom white">
+                    Order Details</button>
+                </td>
+                
+              </tr>
+            </table>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
   </section>

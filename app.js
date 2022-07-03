@@ -90,7 +90,7 @@ app.post("/vehicles-list/payment", function(req, res){
 });
 
 app.get("/vehicles-list/all-rides", function(req, res){
-  res.render('all-rides', {title: 'All Rides'});
+  res.render('all-rides', {title: 'All Rides', vehicles: vehicles});
 });
 
 app.get("/vehicles-list/all-rides/order-details", function(req, res){
