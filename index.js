@@ -64,12 +64,12 @@ const upload = multer({ storage: fileStorage });
 
 
 app.get('/dashboard', isadmin, (req, res) => {
-    res.render('./admin/Dashboard')
+    res.render('admin/dashboard', {title: 'Admin Dashboard',})
 })
-app.get('/dashboard/manageorders', isadmin, async (req, res) => {
+app.get('/dashboard/manage-orders', isadmin, async (req, res) => {
     var orders = await Order.find({ status: { $ne: 'Completed' } }, null, { sort: { 'createdAt': -1 }})
 
-    res.render('./admin/Orders', { order: orders,moment:moment })
+    res.render('admin/orders', { title: 'Manage Orders', order: orders,moment:moment })
 })
 app.post('/updateStatus', isadmin,async (req, res) => {
     let data = JSON.parse(req.body.id)
@@ -82,28 +82,28 @@ if(req.body.status == 'Completed'){
         if (!err) {
            eventEmitter.emit('orderUpdated',{id:data,status:req.body.status})
 
-            res.redirect('/dashboard/manageorders')
+            res.redirect('/dashboard/manage-orders')
         }
     })
 
 
 })
-app.get('/dashboard/managevehicles', isadmin, async (req, res) => {
+app.get('/dashboard/manage-vehicles', isadmin, async (req, res) => {
 let data = await vehicleModel.find()
-    res.render('./admin/Vehicles', { data: data })
+    res.render('admin/vehicles', { title: 'Manage Vehicles',data: data })
 })
-app.get('/dashboard/manageuser', isadmin, async (req, res) => {
+app.get('/dashboard/manage-users', isadmin, async (req, res) => {
     let data = await UserModel.find()
 
-    res.render('./admin/User', { data: data })
+    res.render('admin/users', { title: 'Manage Users',data: data })
 })
 app.get('/dashboard/delete/:id', isadmin, async (req, res) => {
     await vehicleModel.findByIdAndDelete({ _id: req.params.id })
-    res.redirect('/dashboard/managevehicles')
+    res.redirect('/dashboard/manage-vehicles')
 })
 app.get('/dashboard/delete/user/:id', isadmin, async (req, res) => {
     await UserModel.findByIdAndDelete({ _id: req.params.id })
-    res.redirect('/dashboard/manageuser')
+    res.redirect('/dashboard/manage-users')
 })
 
 app.get('/profile', islogin, (req, res) => {
@@ -221,7 +221,7 @@ app.post('/login', (req, res) =>
     const { email, password }   = req.body
     // Validate request 
      if(!email || !password) {
-         req.flash('error', 'All fields are required')
+         req.flash('error', 'All Fields are required')
          return res.redirect('/login')
      } 
      passport.authenticate('local',(err,user,info)=>//this will call the init function in passport js
@@ -267,7 +267,7 @@ app.post('/register', async (req, res) => {
     const { username, email, password, role } = req.body
     // Validate request 
     if(!username || !email || !password) {
-        req.flash('error', 'All fields are required')
+        req.flash('error', 'All Fields are required')
         req.flash('username', username)
         req.flash('email', email)
        return res.redirect(`/register/${role}`)
@@ -276,7 +276,7 @@ app.post('/register', async (req, res) => {
    if(!right)
    {
     if(!validator.isAlpha(req.body.username)){
-        req.flash('error','Invalid name, it should not contain a number or symbol') 
+        req.flash('error','Invalid Name, it should not contain a number or a symbol') 
        return  res.redirect(`/register/${role}`)
 
     } 
@@ -286,7 +286,7 @@ app.post('/register', async (req, res) => {
  
     }
     // if(!validator.isStrongPassword(req.body.password)){
-    //     req.flash('error','password must contain capital letter,a number,a special character') 
+    //     req.flash('error','Password must contain a capital letter, a number and a special character') 
     //     return  res.redirect(`/register/${role}`)
     // }
     right=true
