@@ -263,7 +263,11 @@ app.post('/login', (req, res) =>
         })
        })(req,res)
 })
-
+app.post('/logout',(req,res)=>{
+    req.logout();
+    delete req.session.role
+  res.redirect('/');
+})
 // Home Route
 app.get('/',(req,res)=>{
     res.render('home', {title: 'Rent & Ride'})
@@ -351,7 +355,9 @@ app.post('/rider-profile/place-order', islogin, async (req, res) => {
 
 })
 app.post('/rider-profile/confirm-order', (req, res) => {
+    console.log(req.body)
     let my = req.body.vehicle;
+    var vehicle = JSON.parse(my)
 var TotalTime
 var bill;
     if(req.body.start && req.body.end)
@@ -360,8 +366,13 @@ var bill;
         let date_2 = new Date(req.body.end);
         let difference = date_2.getTime() - date_1.getTime();
          TotalTime = Math.ceil(difference / (1000 * 3600 * 24));
-         
-         bill=TotalTime*700;
+            if(vehicle.Type==2){
+                bill=TotalTime*200
+            }
+            else{
+
+                bill=TotalTime*600;
+            }
         if(TotalTime<0)
         {
             return  res.render('./rider/err', {title: 'Err'})
@@ -370,7 +381,6 @@ var bill;
 
     let location=req.body.location;
     let mobile=req.body.mobile
-    var vehicle = JSON.parse(my)
 
      res.render('rider/confirm-order',{title: 'Payment', data:vehicle,bill:bill,location:location,mobile:mobile,totalDays:TotalTime})
 
