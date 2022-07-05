@@ -47,6 +47,12 @@ app.use(session({
     saveUninitialized: false,
     store: store,
 }))
+app.use((req,res,next)=>{
+    res.locals.session=req.session//by req .session we will get the running  session
+    res.locals.user=req.user
+        next();//must to call to get next step of execution
+
+})
 init(passport)
 app.use(passport.initialize())
 app.use(passport.session())
@@ -74,15 +80,19 @@ app.get('/dashboard/manage-orders', isadmin, async (req, res) => {
 app.post('/updateStatus', isadmin,async (req, res) => {
     let data = JSON.parse(req.body.id)
    let data2= JSON.parse(req.body.Vehicle)
-
+ console.log(req.body.id)
 if(req.body.status == 'Completed'){
    let doc= await vehicleModel.findByIdAndUpdate({_id:data2},{booked:false})
 }
     await Order.findByIdAndUpdate({ _id: data }, { status: req.body.status}, (err, done) => {
+    
         if (!err) {
            eventEmitter.emit('orderUpdated',{id:data,status:req.body.status})
 
             res.redirect('/dashboard/manage-orders')
+        }
+        else{
+            console.log(err)
         }
     })
 
@@ -197,16 +207,17 @@ var duration=[]
 const _getRedirect=(req)=>
   {
     if (req.user.role == 'admin') {
-       
+        req.session.role='admin'
     
         return '/dashboard'
         }
         else if (req.user.role == 'renter') {
+            req.session.role='renter'
                 return '/renter-profile'
        
         }
         else {
-    
+            req.session.role='rider'
             return '/rider-profile'
         }
     

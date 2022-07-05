@@ -22,16 +22,34 @@
           <li class="nav-item">
             <a class="nav-link text-center" href="#">Contact</a>
           </li>
+          <% if(session.user) { %>
           <li class="nav-item">
             <a class="nav-link text-center" href="/login">Login</a>
           </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link text-center" href="/logout">Logout</a>
+            </li>
+            <% } %>
           <li class="nav-item">
             <a class="nav-link text-center" href="/register/rider">Register</a>
           </li>
-
+          <% if(session.role == 'rider') { %>
           <li class="nav-item">
             <a class="nav-link text-center" href="/rider-profile/all-orders">All Rides</a>
           </li>
+        
+          <% } else if(session.role == 'admin'){ %>
+            <li class="nav-item">
+              <a class="nav-link text-center" href="/logout">Dashboard</a>
+            </li>
+            <% } else { %>
+              <li class="nav-item">
+                <a class="nav-link text-center" href="/logout">My vehicles</a>
+              </li>
+              <% } %>
+  
+       
           <!-- <li class="nav-item">
             <a class="nav-link text-center" href="/">Logout</a>
           </li> -->

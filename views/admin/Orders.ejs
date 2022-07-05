@@ -6,7 +6,6 @@ let socket=io()
 socket.emit('join','adminRoom')
 
 socket.on('orderPlaced',(data)=>{
-console.log("order placed harshssss")
 
 // use noty notification
 window.location.reload();
@@ -55,7 +54,7 @@ window.location.reload();
                 <option >Vehicle On The Way</option>            
                 <option >Order Recieved</option>            
                 <option >Completed</option>            
-                <input type="hidden" name="id" value=" <%= JSON.stringify(order[i].user_id) %>">
+                <input type="hidden" name="id" value=" <%= JSON.stringify(order[i]._id) %>">
                 <input type="hidden" name="Vehicle" value=" <%=JSON.stringify(order[i].booked_vehicle.r_id) %>" >
                 </select>
                 </form>
