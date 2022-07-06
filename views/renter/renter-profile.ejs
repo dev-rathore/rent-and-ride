@@ -93,6 +93,7 @@
                   <td></td>
                 <%} else { %>
 
+                  <% if(vehicle.booked === true) { %>
                 <td><span class="bold">Rented By : </span>
                   <%= owners[i] %>
                 </td>
@@ -100,7 +101,7 @@
                 <td><span class="bold">Booked For : </span>
                   <%= duration[i]  %> Days
                 </td>   
-
+                <% }%>
                 <% }%> 
               </tr> 
             </table>

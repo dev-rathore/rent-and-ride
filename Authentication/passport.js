@@ -16,7 +16,7 @@ exports.init=(passport)=>{
     {
      if(match)
      {
-         return done(null,user,{message:'logged in succsefully'})
+         return done(null,user,{message:'logged in sucessfully'})
     //and this return will go too the authCon.js and postlogin method
 
      }

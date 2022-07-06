@@ -1,4 +1,5 @@
-const axios = require('express')
+require('dotenv').config()//this will inject .env variable into this file
+
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 
@@ -20,6 +21,7 @@ var validator = require('validator');
 const Emitter=require('events');//this is used to emit events
 const moment=require('moment');
 const { json } = require('express');
+const fast2sms = require('fast-two-sms')
 
 const app = express();
 const publicDir = path.join(__dirname,'/public'); 
@@ -34,17 +36,17 @@ app.use(expressLayouts);
 app.set('layout', './pages/layout.ejs');
 app.set('view engine', 'ejs')
 
-mongoose.connect("mongodb://localhost:27017/college", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(() => console.log("data base is connected")).catch((err) => console.log(err + "ererer"))
+mongoose.connect(process.env.MONGO_CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(() => console.log("data base is connected")).catch((err) => console.log(err + "ererer"))
 
 const store = new MongoDbSession({
-    uri: 'mongodb://localhost:27017/college',
+    uri: process.env.MONGO_CONNECTION_URL,
     collection: 'authSession'
 })
 const eventEmitter = new Emitter() //setting up the event emiter 
 app.set('eventEmitter',eventEmitter)
 
 app.use(session({
-    secret: "my name is harsh roop rai",
+    secret:process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store,
@@ -59,7 +61,7 @@ init(passport)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash());
-
+// require('./')
 var fileStorage = multer.diskStorage({
     destination: "./public/images/",
     filename: (req, file, cb) => {
@@ -90,7 +92,7 @@ if(req.body.status == 'Completed'){
     
         if (!err) {
            eventEmitter.emit('orderUpdated',{id:data,status:req.body.status})
-
+        //   const respon  =await fast2sms.sendMessage({authorization:'fL9z4MtYXqZSINrClmcHA20yu8PnRg3TpQDVewUEsa5BkoFhxJv7yepm9WnwtioBUZrLals3NRPIjH2k',message:`Namaste Rider Your Order Status is ${req.body.status}`,numbers:['9928525911']}) //Asynchronous Function.
             res.redirect('/dashboard/manage-orders')
         }
         else{
@@ -164,9 +166,9 @@ app.get('/renter-profile/update/:id', islogin, isrenter, async (req, res) => {
 })
 
 app.post('/renter-profile/update', islogin, isrenter, upload, async (req, res) => {
-
+    console.log(req.body)
     var id = JSON.parse(req.body.id)
-    console.log(req.body);
+    console.log(id);
 
     await vehicleModel.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (err, doc) => {
         if (!err) {
@@ -303,10 +305,10 @@ app.post('/register', async (req, res) => {
         return  res.redirect(`/register/${role}`)
  
     }
-    // if(!validator.isStrongPassword(req.body.password)){
-    //     req.flash('error','Password must be of 8 characters and it must contain a capital letter, a number and a special character') 
-    //     return  res.redirect(`/register/${role}`)
-    // }
+    if(!validator.isStrongPassword(req.body.password)){
+        req.flash('error','Password must be of 8 characters and it must contain a capital letter, a number and a special character') 
+        return  res.redirect(`/register/${role}`)
+    }
     right=true
    }
    
@@ -317,7 +319,7 @@ app.post('/register', async (req, res) => {
         res.render('register',{ title: 'Register', role:role})
     }
     else {
-              const hashpw=await bcrypt.hash(req.body.password,10)
+            const hashpw=await bcrypt.hash(req.body.password,10)
           
         let newUser = new UserModel({
             username: username,
