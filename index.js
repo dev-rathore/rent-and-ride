@@ -22,7 +22,9 @@ const moment=require('moment');
 const { json } = require('express');
 
 const app = express();
-app.use(express.static(__dirname + '/public'))
+const publicDir = path.join(__dirname,'/public'); 
+app.use(express.static(publicDir)); 
+// app.use(express.static(__dirname + '/public'))
 // app.use('public', express.static)//setting public folder as static which means compiler will look all the js and front end fiels in public folder by default
 //app.set('views', path.join(__dirname, '/views'))//setting up all the frontend file
 app.use(express.urlencoded({ extended: true }));//so we can accces the form input values
@@ -58,15 +60,15 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash());
 
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "./images");
-    },
+var fileStorage = multer.diskStorage({
+    destination: "./public/images/",
     filename: (req, file, cb) => {
-        cb(null, "/" + Date.now() + "---" + file.originalname)
-    },
+        cb(null,file.fieldname+ "_" + Date.now() + path.extname(file.originalname));
+    }
 });
-const upload = multer({ storage: fileStorage });
+var upload = multer({ 
+    storage: fileStorage 
+}).single('image');
 
 
 app.get('/dashboard', isadmin, (req, res) => {
@@ -95,13 +97,13 @@ if(req.body.status == 'Completed'){
             console.log(err)
         }
     })
-
-
 })
+
 app.get('/dashboard/manage-vehicles', isadmin, async (req, res) => {
 let data = await vehicleModel.find()
     res.render('admin/vehicles', { title: 'Manage Vehicles',data: data })
 })
+
 app.get('/dashboard/manage-users', isadmin, async (req, res) => {
     let data = await UserModel.find()
 
@@ -126,7 +128,7 @@ app.get('/renter-profile/add-vehicle', islogin, isrenter, (req, res) => {
     res.render('renter/add-vehicle', {title: 'Add Vehicle', data: "hello" })
 })
 
-app.post('/renter-profile/add-vehicle', islogin, isrenter, upload.single("image"), async (req, res) => {
+app.post('/renter-profile/add-vehicle', islogin, isrenter, upload, async (req, res) => {
     const { vehicleName, type, gear, model, vehicleNumber, fuel, travelled,mileage } = req.body
     if(!vehicleName || !type || !vehicleNumber || !gear| !model || !fuel || !travelled || !mileage) {
         req.flash('error', 'All fields are required')
@@ -149,7 +151,7 @@ app.post('/renter-profile/add-vehicle', islogin, isrenter, upload.single("image"
             Travelled:travelled,
             Mileage:mileage,
             VehicleNumber: vehicleNumber,
-            image: req.file.path
+            image: req.file.filename
         })
         newVehicle.save().then(() => res.redirect('/renter-profile')).catch((err) => console.log(err))
     }
@@ -161,9 +163,10 @@ app.get('/renter-profile/update/:id', islogin, isrenter, async (req, res) => {
     res.render('renter/update-vehicle', { title: 'Update Vehicle', data: data })
 })
 
-app.post('/renter-profile/update', islogin, isrenter, async (req, res) => {
+app.post('/renter-profile/update', islogin, isrenter, upload, async (req, res) => {
 
     var id = JSON.parse(req.body.id)
+    console.log(req.body);
 
     await vehicleModel.findByIdAndUpdate({ _id: id }, req.body, { new: true }, (err, doc) => {
         if (!err) {
@@ -301,7 +304,7 @@ app.post('/register', async (req, res) => {
  
     }
     // if(!validator.isStrongPassword(req.body.password)){
-    //     req.flash('error','Password must contain a capital letter, a number and a special character') 
+    //     req.flash('error','Password must be of 8 characters and it must contain a capital letter, a number and a special character') 
     //     return  res.redirect(`/register/${role}`)
     // }
     right=true
@@ -342,7 +345,7 @@ app.post('/register', async (req, res) => {
 })
 
 // Rider Routes
-app.get('/rider-profile',isrider, async (req, res) => {
+app.get('/rider-profile', islogin, isrider, async (req, res) => {
     let vehicles = await vehicleModel.find({ booked: false });
     res.render('rider/rider-profile', { title : 'Rider Profile', data: vehicles })
 })  

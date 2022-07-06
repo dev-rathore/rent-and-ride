@@ -17,7 +17,7 @@
         </tr>
         <tr>
           <td><label for="">Model </label></td>
-          <td><input class="form-control" name="model" type="text"></td>
+          <td><input class="form-control" name="model" type="text" placeholder="Enter Vehicle Model"></td>
         </tr>
         <tr>
           <td><label for="">Number </label></td>
@@ -38,6 +38,7 @@
             <select class="form-select" name="gear" id="gear">
               <option value="Automatic">Automatic</option>
               <option value="Manual">Manual</option>
+              <option value="None">None</option>
             </select>
           </td>
         </tr>
@@ -48,6 +49,7 @@
               <option value="Petrol">Petrol</option>
               <option value="Diesel">Diesel</option>
               <option value="Electric">Electric</option>
+              <option value="None">None</option>
             </select>
           </td>
         </tr>
@@ -63,7 +65,8 @@
         </tr>
         <tr>
           <td><label for="">Image </label></td>
-          <td><input class="form-control" type="file" id="img" name="image" accept="image/*"></td>
+          <!-- <td><input class="form-control" type="file" id="img" name="image" accept="image/*"></td> -->
+          <td><input class="form-control" type="file" id="img" name="image"></td>
         </tr>
       </table>
       <button class="btn-custom mt-3" type="submit" name="submit">Add</button>

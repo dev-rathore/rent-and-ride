@@ -4,7 +4,11 @@
     <!-- If zero vehicles are rented then it will show no rides yet -->
 
     <div class="d-flex justify-content-center flex-column align-items-center">
-      <h2 class="mt-3 mb-4 text-center bold highlight">List of all Vehicles Rented</h2>
+      <% if (data['h'].length === 0) {%>
+        <h2 class="mt-3 mb-4 text-center highlight">No Rides Yet</h2>
+      <% } else { %>
+        <h2 class="my-3 text-center highlight">List of all Vehicles Rented</h2>
+      <% } %>
     </div>
 
     <div class="container-fluid">
@@ -49,8 +53,10 @@
                 </td>
               </tr>
               <tr>
-                <td><span class="bold">Bill : </span>
-                  $<%= data['h'][i].bill %>
+                <td>
+                  <span class="bold">Bill : </span>
+                  &nbsp;<i class="fa-solid fa-indian-rupee-sign"></i>
+                  <%= data['h'][i].bill %>
                 </td>
                 <td>
                   <span class="bold">Booked For : </span>

@@ -50,9 +50,10 @@ window.location.reload();
                 <select value="" name="status" id=""  onchange="this.form.submit()" > 
                 <option name="dsd" hidden>Hidden option</option>
                 <option value="" disabled selected hidden>Please Choose...</option>
-                <option >Confirmed</optison>   
+                <option >Confirmed</option> 
+                <option >Payment Done</option>   
                 <option >Vehicle On The Way</option>            
-                <option >Order Recieved</option>            
+                <option >Vehicle Delivered</option>            
                 <option >Completed</option>            
                 <input type="hidden" name="id" value=" <%= JSON.stringify(order[i]._id) %>">
                 <input type="hidden" name="Vehicle" value=" <%=JSON.stringify(order[i].booked_vehicle.r_id) %>" >

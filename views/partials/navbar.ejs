@@ -22,10 +22,28 @@
           <li class="nav-item">
             <a class="nav-link text-center" href="#">Contact</a>
           </li>
+          <% if(session.role == 'rider') { %>
+            <li class="nav-item">
+              <a class="nav-link text-center" href="/rider-profile">Rider Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-center" href="/rider-profile/all-orders">All Rides</a>
+            </li>
+        
+          <% } else if(session.role == 'admin'){ %>
+            <li class="nav-item">
+              <a class="nav-link text-center" href="/dashboard">Dashboard</a>
+            </li>
+          <% } else if(session.role == 'renter') { %>
+            <li class="nav-item">
+              <a class="nav-link text-center" href="/renter-profile">Renter Profile</a>
+            </li>
+          <% } %>
+
           <% if(session.role) { %>
-          <li class="nav-item">
+          <li class="nav-item text-center">
             <form action="/logout" method="post">
-              <button  type="submit"> Logout</button>
+              <button class="logout" type="submit"> Logout</button>
             </form>
           </li>
           <% } else { %>
@@ -35,30 +53,7 @@
             <li class="nav-item">
               <a class="nav-link text-center" href="/register/rider">Register</a>
             </li>
-            <% } %>
-         
-          <% if(session.role == 'rider') { %>
-          <li class="nav-item">
-            <a class="nav-link text-center" href="/rider-profile/all-orders">All Rides</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-center" href="/rider-profile">Vehicles</a>
-          </li>
-        
-          <% } else if(session.role == 'admin'){ %>
-            <li class="nav-item">
-              <a class="nav-link text-center" href="/dashboard">Dashboard</a>
-            </li>
-            <% } else if(session.role == 'renter') { %>
-              <li class="nav-item">
-                <a class="nav-link text-center" href="/renter-profile">My vehicles</a>
-              </li>
-              <% } %>
-  
-       
-          <!-- <li class="nav-item">
-            <a class="nav-link text-center" href="/">Logout</a>
-          </li> -->
+          <% } %>
         </ul>
       </div>
     </div>

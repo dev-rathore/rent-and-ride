@@ -6,7 +6,7 @@ const sc=mongoose.Schema({
     booked_vehicle:{type:Object,required:true},
     time:{type:Number,required:true},
     bill:{type:Number,required:true},
-    status:{type:String,required:true,default:"pending"},
+    status:{type:String,required:true,default:"Pending"},
     location:{type:String,required:true},
     mobile:{type:Number,required:true}
 }, { timestamps: true })//storing time;

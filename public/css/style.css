@@ -97,6 +97,21 @@ html {
   font-family: "Lobster", cursive;
 }
 
+.logout {
+  background: none;
+  color: rgba(244, 242, 255, 0.6);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border: none;
+  padding-top: 6.9px;
+  padding-left: 5px;
+  padding-right: 3px;
+}
+
+.logout:hover {
+  color: rgba(244, 242, 255, 0.8);
+}
+
 header {
   height: 90vh;
   padding: 40px 20px 20px;
@@ -442,16 +457,13 @@ header {
 
 #renter-profile {
   padding: 20px 20px 40px;
+  min-height: 90vh;
 }
 
 .renter-name {
   padding-top: 30px;
   padding-bottom: 10px;
   text-align: center;
-}
-
-.earning {
-  font-family: "Encode Sans", sans-serif;
 }
 
 .vehicle {
@@ -506,14 +518,6 @@ header {
           transform: scale(1.02);
   border: none;
   border-bottom: 5px solid #FC5185;
-}
-
-.td-pr {
-  padding-right: 40px;
-}
-
-.td-pl {
-  padding-left: 40px;
 }
 
 .book-now {
@@ -673,6 +677,7 @@ input[type="radio"] {
 
 #all-rides {
   padding: 20px 20px 40px;
+  min-height: 90vh;
 }
 
 section.status {

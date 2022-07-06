@@ -7,20 +7,7 @@
       <% } %>
       
       <h2 class="renter-name">Hey, Renter</h2>
-      <!-- <h3 class="earning">Your Earning is <span class="highlight">$100</span></h3> -->
     </div>
-    <!-- Renter will be replaced by User name dynamically -->
-    <!-- Here, We will display any initial message to the renter after
-         registeration -->
-         
-    <!-- Empty if no vehicle is added -->
-    <!-- Render everytime when any changes made -->
-
-    <!-- Vehicle Details -->
-    <!-- Vehicle Name, Model, Number, Type (Bike or Car), Gear, Fuel,
-         Travelled, Mileage, Image -->
-    <!-- Status, Rented By -->
-
     <div class="py-4 d-flex justify-content-center">
       <button onclick="location.href = '/renter-profile/add-vehicle';" 
         class="btn-custom mt-2 mb-4">
@@ -37,9 +24,15 @@
           <div class="d-flex justify-content-center align-items-center">
             <table>
               <tr>
-                <td>
+                <td colspan="2" class="text-center">
                   <span class="bold">Vehicle : </span>
                   <%= vehicle.VehicleName %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="bold">Vehicle Number: </span>
+                  <%= vehicle.VehicleNumber %>
                 </td>
                 <td>
                   <span class="bold">Model : </span>
@@ -49,7 +42,7 @@
               <tr>
                 <td>
                   <span class="bold">Type : </span>
-                  <% if(vehicle.wheels === 2) { %>
+                  <% if(vehicle.Type === 2) { %>
                       Two
                   <% } else { %>
                       Four
@@ -128,7 +121,7 @@
     </div>
 
     <% } else { %>
-      <h2> Add Your  First Vehicle </h2>
+      <h2 class="text-center"> Add Your First Vehicle </h2>
       <% } %>
 
   </section>
