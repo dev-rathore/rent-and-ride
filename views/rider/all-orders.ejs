@@ -60,7 +60,12 @@
                 </td>
                 <td>
                   <span class="bold">Booked For : </span>
-                  <%= data['h'][i].time %> Days
+                  <%= data['h'][i].time %> 
+                  <% if(data['h'][i].time === 1){ %>
+                    Day
+                  <%} else { %>
+                    Days  
+                  <% } %>
                 </td>
               </tr>
               <tr>

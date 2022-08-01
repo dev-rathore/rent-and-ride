@@ -16,12 +16,15 @@ const flash = require('express-flash');
 const { init } = require('./Authentication/passport');
 const { islogin, isrenter, isadmin,isrider } = require('./Authentication/passport');
 const multer = require('multer');
-const bcrypt=require('bcrypt')//using to compare hashpw
+
+//const bcrypt=require('bcrypt')//using to compare hashpw
+const bcrypt = require('bcryptjs');
+
 var validator = require('validator');
 const Emitter=require('events');//this is used to emit events
 const moment=require('moment');
 const { json } = require('express');
-const fast2sms = require('fast-two-sms')
+//const fast2sms = require('fast-two-sms')
 
 const app = express();
 const publicDir = path.join(__dirname,'/public'); 
@@ -319,7 +322,22 @@ app.post('/register', async (req, res) => {
         res.render('register',{ title: 'Register', role:role})
     }
     else {
-            const hashpw=await bcrypt.hash(req.body.password,10)
+
+        //const hashpw=await bcrypt.hash(req.body.password,10)
+        var hashpw = '';
+        bcrypt.genSalt(10, function (err, Salt) {
+
+            // The bcrypt is used for encrypting password.
+            bcrypt.hash(req.body.password, Salt, function (err, hash) {
+            
+                if (err) {
+                    return console.log('Cannot encrypt');
+                }
+            
+                hashpw = hash;
+                console.log(hashpw);
+            })
+        })       
           
         let newUser = new UserModel({
             username: username,
@@ -369,6 +387,10 @@ var bill;
     {
         let date_1 = new Date(req.body.start);
         let date_2 = new Date(req.body.end);
+        var today = new Date().getDate();
+        // if(date_1.getMonth() < new Date().getMonth() || date_1.getDate() < today){
+        //     return  res.render('./rider/err', {title: 'Date Error'})
+        // }
         let difference = date_2.getTime() - date_1.getTime();
          TotalTime = Math.ceil(difference / (1000 * 3600 * 24));
             if(vehicle.Type==2){

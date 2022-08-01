@@ -1,6 +1,7 @@
 const LocalStrategy =require('passport-local').Strategy
 const User=require('../models/User')
-const bcrypt=require('bcrypt')//using to compare hashpw
+//const bcrypt=require('bcrypt')//using to compare hashpw
+const bcrypt = require('bcryptjs');
 
 exports.init=(passport)=>{
     passport.use(new LocalStrategy({usernameField:'email'},async (email,password,done)=>{
@@ -12,22 +13,34 @@ exports.init=(passport)=>{
     {
         return done(null,false,{message:'No user with this email'})//theer is no user returning message will print on front end
     }
-    bcrypt.compare(password,user.password).then(match=>//comparing password
-    {
-     if(match)
-     {
-         return done(null,user,{message:'logged in sucessfully'})
+
+    // bcrypt.compare(password,user.password).then(match=>//comparing password
+    // {
+    //  if(match)
+    //  {
+    //      return done(null,user,{message:'logged in sucessfully'})
+    // //and this return will go too the authCon.js and postlogin method
+
+    //  }
+    // return done(null,false,{message:'Wrong Password'})
     //and this return will go too the authCon.js and postlogin method
-
-     }
-    return done(null,false,{message:'Wrong Password'})
-    //and this return will go too the authCon.js and postlogin method
-
-
-    }).catch(err=>
-        {
-            return done(null,false,{message:'Something went wrong'})
+// })
+// })
+        bcrypt.compare(password, user.password, 
+            async function (err, isMatch) { 
+            if (isMatch) {
+                return done(null,user,{message:'logged in sucessfully'})
+            }
+            
+            if (!isMatch) {
+                return done(null,false,{message:'Wrong Password'})
+            }
         })
+        
+        // .catch(err=>
+        // {
+        //     return done(null,false,{message:'Something went wrong'})
+        // })
 
 }));
     passport.serializeUser((user,done)=>//storiing the whole user object in session  
