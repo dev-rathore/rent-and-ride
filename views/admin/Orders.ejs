@@ -42,11 +42,9 @@
                 <option >Vehicle Delivered</option>            
                 <option >Completed</option>            
         
-                <input type="hidden" name="id" value=" <%= JSON.stringify(order[i]._id) %>">
+                <input type="hidden" name="id" value="<%= JSON.stringify(order[i]._id) %>">
         
-                <input type="hidden" name="Vehicle" value=" <%=JSON.stringify(order[i].bookedVehicle._id) %>" >
-        
-                <!-- <input type="hidden" name="Vehicle" value=" <%=//JSON.stringify(order[i].booked_vehicle.r_id) %>" > -->
+                <input type="hidden" name="Vehicle" value="<%=JSON.stringify(order[i].bookedVehicle._id) %>" >
         
               </select>
             </form>

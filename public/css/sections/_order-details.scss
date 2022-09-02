@@ -17,6 +17,11 @@ section.status {
 .status-box ul li span {
   position: relative;
   padding-left: 20px;
+
+  @media screen and (max-width: 400px) {
+    font-size: 18px;
+    padding-left: 10px;
+  }
 }
 .status-box ul {
   margin-left: 50px;
@@ -47,6 +52,11 @@ section.status {
   top: 50%;
   transform: translateY(-50%);
   color: inherit;
+
+  @media screen and (max-width: 320px) {
+    left: -65px;
+    font-size: 25px;
+  }
 }
 .status-box ul li:nth-child(1) span:before {
   content: "\f46c";
@@ -79,10 +89,20 @@ section.status {
   margin-top: 10px;
 }
 
+.status-box ul li:nth-child(5):before {
+  @media screen and (max-width: 290px) {
+    background-color: white;
+  }
+}
+
 // Last dot
 .status-box ul li:nth-child(5) span:after {
   // box-shadow:0 20px 1px 25px white;
   box-shadow: 0 10px 1px 14px white;
+
+  @media screen and (max-width: 290px) {
+    box-shadow: 0 1px 1px 10px white;
+  }
 }
 
 .status-box ul li.step-completed:before {
@@ -110,10 +130,3 @@ section.status {
   font-size: 14px;
   margin-top: 8px;
 }
-
-// @media screen and (max-width:768px){
-//   section.status ul li span{
-//     font-size: 15px;
-//   }
-// }
-// }

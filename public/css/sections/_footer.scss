@@ -1,5 +1,4 @@
-
-footer{
+footer {
   margin-top: 50px;
   position: relative;
   width: 100%;
@@ -11,7 +10,7 @@ footer{
   align-items: center;
   flex-direction: column;
 
-  & p{
+  & p {
     color: $light;
     text-align: center;
     margin-top: 15px;
@@ -19,30 +18,31 @@ footer{
     font-size: 1.1em;
   }
 
-  & ul{
+  & ul {
     padding: 0 !important;
   }
 
-  & .social_icon, .menu{
+  & .social_icon,
+  .menu {
     margin: 10px 0 !important;
 
-    & li{
+    & li {
       list-style: none;
     }
   }
 }
-footer .social_icon li a{
+footer .social_icon li a {
   font-size: 2em;
   color: $light;
   margin: 0 10px;
   display: inline-block;
   transition: 0.5s;
 
-  &:hover{
+  &:hover {
     transform: translateY(-10px);
   }
-}  
-footer .menu li a{
+}
+footer .menu li a {
   font-size: 1.2em;
   color: $light;
   margin: 0 10px;
@@ -51,7 +51,7 @@ footer .menu li a{
   text-decoration: none;
   opacity: 0.75;
 
-  &:hover{
+  &:hover {
     opacity: 1;
   }
 }

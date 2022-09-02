@@ -1,16 +1,15 @@
-
-#payment{
+#payment {
   min-height: 90vh;
 
-  form .box{
+  form .box {
     width: 50%;
   }
 }
 
-@media screen and (max-width:768px){
-  #payment{
-    form .box{
+@media screen and (max-width: 768px) {
+  #payment {
+    form .box {
       width: 80%;
     }
   }
-}  
+}

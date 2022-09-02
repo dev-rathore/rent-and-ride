@@ -308,8 +308,12 @@ app.get(
 //   res.send("you are logged in");
 // });
 
-const server = app.listen(80, () => {
-  console.log("Server is listening on port 80");
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8080;
+}
+const server = app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
 
 // Socket

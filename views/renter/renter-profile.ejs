@@ -2,9 +2,11 @@
   <div class="d-flex justify-content-center flex-column align-items-center">
     <% if (messages.error) { %>
     <span class="text-red-500 text-sm"><%= messages.error %></span>
-    <% } %>
-
+    <% } %> <% if(renterName){ %>
+    <h2 class="renter-name">Hey, <%= renterName%></h2>
+    <% } else {%>
     <h2 class="renter-name">Hey, Renter</h2>
+    <% } %>
   </div>
   <div class="py-4 d-flex justify-content-center">
     <button
@@ -78,23 +80,18 @@
               </td>
             </tr>
             <tr>
-              <!-- ERROR here -->
               <% if(vehicle.bookingStatus.isBooked === true) { %>
-              <!-- <% //if(owners[i] == undefined && duration[i] == undefined) { %> -->
               <td>
                 <span class="bold">Rented By : </span>
-                <!-- <%= //owners[i] %> -->
                 <%= vehicle.bookingStatus.riderName %>
               </td>
 
               <td>
                 <span class="bold">Booked For : </span>
-                <!-- <%= //duration[i] %> Days -->
                 <%= vehicle.bookingStatus.bookingDuration %> <%=
                 vehicle.bookingStatus.bookingDuration === 1 ? "Day" : "Days"; %>
               </td>
               <% } else { %>
-              <!-- <%//} else { %> <% //if(vehicle.booked === true) { %> -->
               <td></td>
               <td></td>
               <% } %>

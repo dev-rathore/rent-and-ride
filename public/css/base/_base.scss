@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,19 +9,25 @@
 //   scroll-behavior: smooth;
 // }
 
-.highlight{
+.highlight {
   color: $primary;
 }
-.bold{ font-weight: 700; }
-.green{ color: #00C301; }
-.red{ color: #FF1D18; }
+.bold {
+  font-weight: 700;
+}
+.green {
+  color: #00c301;
+}
+.red {
+  color: #ff1d18;
+}
 
-body{
+body {
   font-family: $roboto;
   // background-color: $light;
   overflow-x: hidden;
 }
 
-html{
+html {
   overflow-x: hidden;
 }

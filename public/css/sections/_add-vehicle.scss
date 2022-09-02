@@ -1,12 +1,11 @@
-
-#add-vehicle{
+#add-vehicle {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 30px 10px;
 }
 
-.add-vehicle-form{
+.add-vehicle-form {
   min-width: 200px;
   padding: 20px 20px;
   display: flex;
@@ -17,13 +16,13 @@
   border-radius: 5px;
   box-shadow: $boxShadow;
 
-  h3{
+  h3 {
     margin-top: 10px;
     margin-bottom: 30px;
   }
 
-  table{
-    td{
+  table {
+    td {
       padding: 10px 15px;
     }
   }
