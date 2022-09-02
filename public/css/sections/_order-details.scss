@@ -1,20 +1,20 @@
-section.status{
+section.status {
   min-height: calc(100vh-86px);
   width: 80%;
 }
-.status-box{
+.status-box {
   padding: 60px 0 30px;
 }
 //making li dot
-.status-box ul li{
+.status-box ul li {
   text-decoration: none;
 }
 
-.order-status{
+.order-status {
   font-family: $encode-sans;
 }
 
-.status-box ul li span{
+.status-box ul li span {
   position: relative;
   padding-left: 20px;
 }
@@ -23,8 +23,8 @@ section.status{
 }
 
 // For dots
-.status-box ul li span:after{
-  content: '';
+.status-box ul li span:after {
+  content: "";
   position: absolute;
   left: -20px;
   top: 41%;
@@ -37,41 +37,41 @@ section.status{
 }
 
 // For icons
-.status-box ul li span:before{
-  content: '';
-  font-family:"Font Awesome 5 Free";
+.status-box ul li span:before {
+  content: "";
+  font-family: "Font Awesome 5 Free";
   font-size: 35px;
   font-weight: 900;
   position: absolute;
-  left:-75px;
-  top:50%;
+  left: -75px;
+  top: 50%;
   transform: translateY(-50%);
   color: inherit;
 }
-.status-box ul li:nth-child(1) span:before{
-  content: '\f46c';
+.status-box ul li:nth-child(1) span:before {
+  content: "\f46c";
 }
-.status-box ul li:nth-child(2) span:before{
-  content: '\f560';
+.status-box ul li:nth-child(2) span:before {
+  content: "\f560";
 }
-.status-box ul li:nth-child(3) span:before{
-  content: '\f1b9';
+.status-box ul li:nth-child(3) span:before {
+  content: "\f1b9";
 }
-.status-box ul li:nth-child(4) span:before{
-  content: '\f3c5';
+.status-box ul li:nth-child(4) span:before {
+  content: "\f3c5";
 }
-.status-box ul li:nth-child(5) span:before{
-  content: '\f582';
+.status-box ul li:nth-child(5) span:before {
+  content: "\f582";
 }
 
-.status-box ul li{
+.status-box ul li {
   position: relative;
 }
 //line
-.status-box ul li:before{
-  content: '';
+.status-box ul li:before {
+  content: "";
   position: absolute;
-  top:0;
+  top: 0;
   left: -16px;
   width: 2px;
   height: 100%;
@@ -80,38 +80,35 @@ section.status{
 }
 
 // Last dot
-.status-box ul li:nth-child(5) span:after{
+.status-box ul li:nth-child(5) span:after {
   // box-shadow:0 20px 1px 25px white;
   box-shadow: 0 10px 1px 14px white;
 }
 
-.status-box ul li.step-completed:before
-{
+.status-box ul li.step-completed:before {
   background: $primary;
 }
 
-.status-box ul li.step-completed span:after
-{
+.status-box ul li.step-completed span:after {
   background: $primary;
 }
-.status-box ul li.step-completed span
-{
+.status-box ul li.step-completed span {
   color: $primary;
 }
 
 // Curent status
-.status-box ul li.current span
-{
-  color: #00C301;
+.status-box ul li.current span {
+  color: #00c301;
 }
-.status-box ul li.current span:after
-{
-  background: #00C301;
+.status-box ul li.current span:after {
+  background: #00c301;
 }
-.status-box ul li small{
- float:right;
- font-size:18px;
- margin-top: 8px; 
+
+// For Time
+.status-box ul li small {
+  float: right;
+  font-size: 14px;
+  margin-top: 8px;
 }
 
 // @media screen and (max-width:768px){

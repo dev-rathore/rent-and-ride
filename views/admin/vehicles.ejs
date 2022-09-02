@@ -16,19 +16,19 @@
             <tbody>
               <% data.forEach((vehicle, i) => { %>
               <tr>
-                <td scope="row"><%= vehicle.r_id %></td>
-                <td><%= vehicle.VehicleName%></td>
+                <td scope="row"><%= vehicle.renterId %></td>
+                <td><%= vehicle.vehicleName%></td>
                 <td>
-                    <% if(vehicle.Type === 2) { %>
+                    <% if(vehicle.type === 2) { %>
                         Two
                     <% } else { %>
                         Four
                     <% } %>
                     Wheeler
                   </td>
-                <td><%= vehicle.VehicleNumber%></td>
+                <td><%= vehicle.vehicleNumber%></td>
                 <td>
-                  <% if(vehicle.booked === true) { %>
+                  <% if(vehicle.bookingStatus.isBooked === true) { %>
                     <span class="green">
                       Rented
                     </span>
@@ -40,9 +40,9 @@
                 </td>
                 <td><img width="80px" src='/images/<%=vehicle.image%>'></img></td>
                 <td>
-                    <button onclick="location.href = '/dashboard/delete/<%=vehicle._id%>';" class="btn-outline-custom m-2">
-                        Delete
-                    </button>
+                  <button onclick="location.href = '/admin/dashboard/manage-vehicles/delete-vehicle/<%=vehicle._id%>';" class="btn-outline-custom m-2">
+                      Delete
+                  </button>
                 </td>
               </tr>
               <% }) %>

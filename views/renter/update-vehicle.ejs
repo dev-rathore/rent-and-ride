@@ -1,70 +1,148 @@
-
 <section id="add-vehicle">
-    <form class="add-vehicle-form" action="/renter-profile/update" method="post" enctype="multipart/form-data">
-      
-      <h3>Update Vehicle Details</h3>
-      <input type="hidden" name="id" value="<%= JSON.stringify(data._id) %> "><br>
-      <table>
-        <tr>
-          <td><label for="">Name </label></td>
-          <td>
-            <!-- <input class="form-control" name="name" type="text" placeholder="Enter Vehicle Name" enctype="multipart/form-data"> -->
-            <input class="form-control" name="vehicleName" type="text" placeholder="Enter Vehicle Name" value='<%= data.VehicleName %>'>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="">Model </label></td>
-          <td><input class="form-control" name="model" type="text" value='<%= data.Model %>'></td>
-        </tr>
-        <tr>
-          <td><label for="">Number </label></td>
-          <td><input class="form-control" name="vehicleNumber" type="number" placeholder="Enter Vehicle Number" value='<%= data.VehicleNumber %>'></td>
-        </tr>
-        <tr>
-          <td><label for="">Type </label></td>
-          <td>
-            <select class="form-select" name="type" id="type">
-              <option value="2">Two Wheeler</option>
-              <option value="4">Four Wheeler</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="">Gear </label></td>
-          <td>
-            <select class="form-select" name="gear" id="gear">
-              <option value="Automatic">Automatic</option>
-              <option value="Manual">Manual</option>
-              <option value="None">None</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="">Fuel </label></td>
-          <td>
-            <select class="form-select" name="fuel" id="fuel">
-              <option value="Petrol">Petrol</option>
-              <option value="Diesel">Diesel</option>
-              <option value="Electric">Electric</option>
-              <option value="None">None</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="">Travelled </label></td>
-          <td><input class="form-control" name="travelled" type="number" 
-              placeholder="kms" value='<%= data.Travelled %>'></td>
-        </tr>
-        <tr>
-          <td><label for="">Mileage </label></td>
-          <td><input class="form-control" name="mileage" type="number"
-              placeholder="km/l" value='<%= data.Mileage %>'></td>
-        </tr>
-        <tr>
-          <td><label for="">Image </label></td>
-          <td><input class="form-control" type="file" id="img" name="image" value='<%= data.image %>'></td>
-        </tr>
-      </table>
-      <button class="btn-custom mt-3" type="submit" name="submit">Update</button>
-    </form>
-  </section>
+  <form
+    class="add-vehicle-form"
+    action="/renter-profile/update/<%= data._id%>"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <h3>Update Vehicle Details</h3>
+    <!-- <input type="hidden" name="id" value="<%= //data._id%>" /><br /> -->
+    <table>
+      <tr>
+        <td><label for="">Name </label></td>
+        <td>
+          <!-- <input class="form-control" name="name" type="text" placeholder="Enter Vehicle Name" enctype="multipart/form-data"> -->
+          <input
+            class="form-control"
+            name="vehicleName"
+            type="text"
+            placeholder="Enter Vehicle Name"
+            value="<%= data.vehicleName %>"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td><label for="">Model </label></td>
+        <td>
+          <input
+            class="form-control"
+            name="model"
+            type="text"
+            value="<%= data.model %>"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td><label for="">Number </label></td>
+        <td>
+          <input
+            class="form-control"
+            name="vehicleNumber"
+            type="number"
+            placeholder="Enter Vehicle Number"
+            value="<%= data.vehicleNumber %>"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td><label for="">Type </label></td>
+        <td>
+          <select class="form-select" name="type" id="type">
+            <% if(data.type === 2) { %>
+            <option value="2" selected>Two Wheeler</option>
+            <option value="4">Four Wheeler</option>
+            <% } else { %>
+            <option value="2">Two Wheeler</option>
+            <option value="4" selected>Four Wheeler</option>
+            <% } %>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="">Gear </label></td>
+        <td>
+          <select class="form-select" name="gear" id="gear">
+            <% if(data.gear === "Automatic") { %>
+            <option value="Automatic" selected>Automatic</option>
+            <option value="Manual">Manual</option>
+            <option value="None">None</option>
+            <% } else if(data.gear === "Manual") { %>
+            <option value="Automatic">Automatic</option>
+            <option value="Manual" selected>Manual</option>
+            <option value="None">None</option>
+            <% } else if(data.gear === "None") { %>
+            <option value="Automatic">Automatic</option>
+            <option value="Manual">Manual</option>
+            <option value="None" selected>None</option>
+            <% } %>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="">Fuel </label></td>
+        <td>
+          <select class="form-select" name="fuel" id="fuel">
+            <% if(data.fuel === "Petrol") { %>
+            <option value="Petrol" selected>Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Electric</option>
+            <option value="None">None</option>
+            <% } else if(data.fuel === "Diesel") { %>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel" selected>Diesel</option>
+            <option value="Electric">Electric</option>
+            <option value="None">None</option>
+            <% } else if(data.fuel === "Electric") { %>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric" selected>Electric</option>
+            <option value="None">None</option>
+            <% } else if(data.fuel === "None") { %>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Electric</option>
+            <option value="None" selected>None</option>
+            <% } %>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="">Travelled </label></td>
+        <td>
+          <input
+            class="form-control"
+            name="travelled"
+            type="number"
+            placeholder="kms"
+            value="<%= data.travelled %>"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td><label for="">Mileage </label></td>
+        <td>
+          <input
+            class="form-control"
+            name="mileage"
+            type="number"
+            placeholder="km/l"
+            value="<%= data.mileage %>"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td><label for="">Image </label></td>
+        <td>
+          <input
+            class="form-control"
+            type="file"
+            id="img"
+            name="image"
+            value="<%= data.image %>"
+          />
+        </td>
+      </tr>
+    </table>
+    <button class="btn-custom mt-3" type="submit">Update</button>
+  </form>
+</section>
