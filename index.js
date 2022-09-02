@@ -308,10 +308,7 @@ app.get(
 //   res.send("you are logged in");
 // });
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 8080;
-}
+var port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
