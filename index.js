@@ -1,4 +1,4 @@
-require("dotenv").config(); //this will inject .env variable into this file
+require("dotenv").config(); // This will inject .env variable into this file
 
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
@@ -9,7 +9,7 @@ const session = require("express-session");
 const MongoDbSession = require("connect-mongodb-session")(session);
 
 // Models
-const UserModel = require("./models/user");
+const UserModel = require("./models/user.js");
 const OrderModel = require("./models/rider/order");
 const VehicleModel = require("./models/renter/vehicle");
 // const Income = require("./models/renter/income");
