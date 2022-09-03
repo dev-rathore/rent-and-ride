@@ -112,9 +112,22 @@ html {
   color: rgba(244, 242, 255, 0.8);
 }
 
+.marquee {
+  padding-top: 5px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: #fc5185;
+}
+
 header {
-  height: 90vh;
+  height: 85vh;
   padding: 40px 20px 20px;
+}
+
+@media screen and (max-width: 875px) {
+  header {
+    height: auto;
+  }
 }
 
 .hero-header {
@@ -164,6 +177,12 @@ header {
   padding-bottom: 2%;
   text-align: center;
   text-shadow: 2px 2px rgba(37, 42, 52, 0.3);
+}
+
+@media screen and (max-width: 800px) {
+  #how-it-works h1 {
+    margin: 5px;
+  }
 }
 
 .steps {
