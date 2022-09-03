@@ -159,7 +159,7 @@ header {
 }
 
 .hero-header button {
-  margin: 15px 5px;
+  margin: 5px 5px;
 }
 
 @media screen and (max-width: 500px) {
