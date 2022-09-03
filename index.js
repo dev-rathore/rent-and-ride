@@ -12,7 +12,6 @@ const MongoDbSession = require("connect-mongodb-session")(session);
 const UserModel = require("./models/user");
 const OrderModel = require("./models/rider/order");
 const VehicleModel = require("./models/renter/vehicle");
-// const Income = require("./models/renter/income");
 
 const passport = require("passport");
 const flash = require("express-flash");

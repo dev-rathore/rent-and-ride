@@ -56,6 +56,11 @@
   </div>
 </section>
 
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  let socket = io();
+</script>
+
 <script>
   socket.emit('join','adminRoom');
 
