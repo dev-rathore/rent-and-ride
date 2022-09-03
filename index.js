@@ -30,16 +30,11 @@ var validator = require("validator");
 const Emitter = require("events"); // Used to emit events
 
 const moment = require("moment");
-const { json } = require("express");
-//const fast2sms = require('fast-two-sms')
 
 const app = express();
 const publicDir = path.join(__dirname, "/public");
 app.use(express.static(publicDir));
-// app.use(express.static(__dirname + '/public'))
-// app.use('public', express.static)//setting public folder as static which means compiler will look all the js and front end fiels in public folder by default
-//app.set('views', path.join(__dirname, '/views'))//setting up all the frontend file
-app.use(express.urlencoded({ extended: true })); //so we can accces the form input values
+app.use(express.urlencoded({ extended: true })); // So we can access the form input values
 app.use(express.json());
 
 app.use(expressLayouts);
@@ -52,8 +47,8 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false,
   })
-  .then(() => console.log("data base is connected"))
-  .catch((err) => console.log(err + "ererer"));
+  .then(() => console.log("Database connected Successfully"))
+  .catch((err) => console.log(err + "error"));
 
 const store = new MongoDbSession({
   uri: process.env.MONGO_CONNECTION_URL,
@@ -73,9 +68,9 @@ app.use(
   })
 );
 app.use((req, res, next) => {
-  res.locals.session = req.session; //by req .session we will get the running  session
+  res.locals.session = req.session; // By req.session we will get the running  session
   res.locals.user = req.user;
-  next(); //must to call to get next step of execution
+  next(); // Must call to get next step of execution
 });
 init(passport);
 app.use(passport.initialize());
@@ -103,16 +98,25 @@ app.get("/", (req, res) => {
   res.render("home", { title: "Rent & Ride" });
 });
 
-// Login | Register | Logout
-
 const login = require("./controllers/login");
 const registeration = require("./controllers/register");
+const renterProfile = require("./controllers/renter/renterProfile");
+const addVehicle = require("./controllers/renter/addVehicle");
+const updateVehicle = require("./controllers/renter/updateVehicle");
+const deleteVehicle = require("./controllers/renter/deleteVehicle");
+const riderProfile = require("./controllers/rider/riderProfile");
+const placeOrder = require("./controllers/rider/placeOrder");
+const confirmPayment = require("./controllers/rider/confirmPayment");
+const allOrders = require("./controllers/rider/allOrders");
+const singleOrder = require("./controllers/rider/singleOrder");
+const manageVehicles = require("./controllers/admin/manageVehicles");
+const manageOrders = require("./controllers/admin/manageOrders");
+const manageUsers = require("./controllers/admin/manageUsers");
 
 // Get Redirect
 const _getRedirect = (req) => {
   if (req.user.role == "admin") {
     req.session.role = "admin";
-
     return "/admin/dashboard";
   } else if (req.user.role == "renter") {
     req.session.role = "renter";
@@ -123,6 +127,7 @@ const _getRedirect = (req) => {
   }
 };
 
+// Login
 app.get("/login", (req, res) => {
   res.render("login", { title: "Login" });
 });
@@ -145,11 +150,6 @@ app.post("/logout", (req, res) => {
 });
 
 // Renter Routes
-
-const renterProfile = require("./controllers/renter/renterProfile");
-const addVehicle = require("./controllers/renter/addVehicle");
-const updateVehicle = require("./controllers/renter/updateVehicle");
-const deleteVehicle = require("./controllers/renter/deleteVehicle");
 
 app.get(
   "/renter-profile",
@@ -204,12 +204,6 @@ app.get("/renter-profile/delete/:id", islogin, isrenter, async (req, res) => {
 
 // Rider Routes
 
-const riderProfile = require("./controllers/rider/riderProfile");
-const placeOrder = require("./controllers/rider/placeOrder");
-const confirmPayment = require("./controllers/rider/confirmPayment");
-const allOrders = require("./controllers/rider/allOrders");
-const singleOrder = require("./controllers/rider/singleOrder");
-
 app.get(
   "/rider-profile",
   islogin,
@@ -253,10 +247,6 @@ app.get(
 );
 
 // Admin Routes
-
-const manageVehicles = require("./controllers/admin/manageVehicles");
-const manageOrders = require("./controllers/admin/manageOrders");
-const manageUsers = require("./controllers/admin/manageUsers");
 
 app.get("/admin/dashboard", isadmin, (req, res) => {
   res.render("admin/dashboard", { title: "Admin Dashboard" });
@@ -303,10 +293,6 @@ app.get(
   isadmin,
   manageUsers.deleteUser(UserModel)
 );
-
-// app.get("/profile", islogin, (req, res) => {
-//   res.send("you are logged in");
-// });
 
 var port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
