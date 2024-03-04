@@ -13,6 +13,11 @@ Install VS Code `Live Sass Compiler` extension by Glenn Marks to compile sass fi
 
 In the project directory, you can run:
 
+### `npm install`
+
+Install all the packages.
+Make sure you have `node version 16.15.1` while installing packages.
+
 ### `nodemon index.js`
 
 Runs the app in the development mode.
