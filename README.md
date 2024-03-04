@@ -1,6 +1,6 @@
 # Getting Started with Rent and Ride
 
-This project is created using EJS, Nodejs and Expressjs.
+This project is created using Bootstrap, EJS, Nodejs and Expressjs.
 
 ## Prerequisites
 
